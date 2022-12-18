@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Al-Fatihah",
+    "juz": 1,
+    "progress": 100
+  },
+  {
+    "id": 2,
+    "title": "Al-Baqarah",
+    "juz": 2,
+    "progress": 70
+  },
+  {
+    "id": 3,
+    "title": "Ali-Imran",
+    "juz": 3,
+    "progress": 20
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "surah": 1,
+    "text": "Al-Fatihah 1",
+    "juz": 1,
+    "progress": 100
+  },
+  {
+    "id": 2,
+    "surah": 1,
+    "text": "Al-Fatihah 2",
+    "juz": 1,
+    "progress": 100
+  },
+  {
+    "id": 3,
+    "surah": 1,
+    "text": "Al-Fatihah 3",
+    "juz": 1,
+    "progress": 100
+  }
+]
