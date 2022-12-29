@@ -17,7 +17,6 @@ export default function JuzOverviewScreen({
 
   async function getJuzData() {
     const data = await fetchSurahByJuz(id)
-    console.log("Cek data", data)
     setData(data)
   }
 

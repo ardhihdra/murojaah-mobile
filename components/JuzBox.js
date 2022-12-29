@@ -1,43 +1,29 @@
 import { mainColor, mainShadow } from "@styles/Main.styles";
 import { StyleSheet, Text, View } from "react-native";
 import * as Progress from 'react-native-progress';
+import { progressToCircleColor, progressToColor } from "utils/helper";
 
 export default function JuzBox({
   juz
 }) {
-
-  function progressToColor(progress) {
-    if(progress >= 100) return 'violet'
-    else if(progress > 80) return 'green'
-    else if(progress > 60) return 'orange'
-    else if(progress > 30) return 'gold'
-    return 'white'
-  }
-
-  function progressToCircleColor(progress) {
-    if(progress >= 100) return 'violet'
-    else if(progress > 80) return 'green'
-    else if(progress > 60) return 'orange'
-    else if(progress > 30) return 'gold'
-    return 'grey'
-  }
+  const progress = juz.progress || 0
 
   return (
     <View
       style={[
         styles.juzBox,
-        {borderColor: progressToColor(juz.progress)}
+        {borderColor: progressToColor(progress)}
       ]}
     >
-      <Text style={styles.title}>Juz {juz.juz}</Text>
+      <Text style={styles.title}>Juz {Number(juz.index)}</Text>
       <Progress.Circle
         style={styles.progress}
-        progress={juz.progress/100}
+        progress={progress/100}
         size={80}
-        color={progressToCircleColor(juz.progress)}
+        color={progressToCircleColor(progress)}
         borderWidth={2}
         showsText
-        formatText={() => `${juz.progress}%`}
+        formatText={() => `${progress}%`}
       />
     </View>
   )

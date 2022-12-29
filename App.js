@@ -1,17 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 
 import { useCallback } from 'react';
-import BottomTabs from './components/navigator/BottomTabs';
 import 'db/firebase';
-import LoginScreen from 'screens/LoginScreen';
-import LoginNavigator from '@components/navigator/LoginNavigator';
 import { AuthProvider } from 'store/auth-context';
 import Router from '@components/Router';
 import { mainColor } from '@styles/Main.styles';
+import { SettingsProvider } from 'store/settings-context';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -42,7 +39,9 @@ export default function App() {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <StatusBar style="auto" />
       <AuthProvider>
+      <SettingsProvider>
         <Router />
+      </SettingsProvider>
       </AuthProvider>
     </View>
   );

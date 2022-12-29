@@ -1,6 +1,6 @@
 import { auth, firestoreDb } from 'db/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { Timestamp, doc, setDoc, updateDoc } from 'firebase/firestore';
 
 /**
  * Save user email and password to Firebase Authorization

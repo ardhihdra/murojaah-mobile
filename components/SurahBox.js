@@ -1,10 +1,16 @@
+import STRINGS from "@constants/strings/strings";
 import { mainShadow } from "@styles/Main.styles";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Progress from 'react-native-progress';
+import { SettingsContext } from "store/settings-context";
 
 export default function SurahBox({
  surah={}
 }) {
+  const surahProgress = surah.progress
+  const { language } = useContext(SettingsContext)
+
   function progressToColor(progress) {
     if(progress >= 100) return 'violet'
     else if(progress > 80) return 'green'
@@ -25,28 +31,20 @@ export default function SurahBox({
     <View
       style={[
         styles.surahBox,
-        {borderColor: progressToColor(surah?.progress || 0)}
+        {borderColor: progressToColor(surahProgress || 0)}
       ]}
     >
-      <Text style={styles.title}>Surah {surah?.surah}</Text>
+      <Text style={styles.title}>{STRINGS.surah[language]} {surah?.title}</Text>
+      <Text style={styles.title}>{surah?.titleAr}</Text>
       <Progress.Bar
         style={styles.progress}
-        progress={(surah?.progress || 0)/100}
+        progress={(surahProgress || 0)/100}
         width={120}
-        color={progressToCircleColor(surah?.progress || 0)}
+        color={progressToCircleColor(surahProgress || 0)}
         borderWidth={2}
         showsText
-        formatText={() => `${surah?.progress || 0}%`}
+        formatText={() => `${surahProgress || 0}%`}
       />
-      {/* <Progress.Circle
-        style={styles.progress}
-        progress={surah.progress/100}
-        size={80}
-        color={progressToColor(surah.progress)}
-        borderWidth={2}
-        showsText
-        formatText={() => `${surah.progress}%`}
-      /> */}
     </View>
   )
 }
@@ -67,6 +65,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '500',
     marginBottom: 4,
+    textAlign: 'center'
   },
   progress: {
     margin: 4,

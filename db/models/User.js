@@ -1,4 +1,5 @@
 import { createUser } from "@api/auth"
+import { FieldValue } from "firebase/firestore"
 
 export default class User {
   constructor({
@@ -16,6 +17,7 @@ export default class User {
     this.dirham = dirham || 0
     this.photoURL = photoURL || ''
     this.phoneNumber = phoneNumber || ''
+    this.country = country || ''
   }
 
   async saveUserToDB() {
@@ -33,6 +35,8 @@ export default class User {
       dirham: this.dirham,
       photoURL: this.photoURL,
       phoneNumber: this.phoneNumber,
+      country: this.country,
+      createdAt: FieldValue.serverTimestamp()
     })
     return creation
   }

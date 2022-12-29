@@ -3,11 +3,15 @@ export const ROUTES = {
   JuzCategories: 'Learn By Juz',
   SurahNavigator: 'Surah',
   SurahCategories: 'Learn By Surah',
-  JuzOverview: 'JuzOverview',
-  Huruf: 'Huruf',
+  JuzOverview: 'Juz Overview',
+  Huruf: 'Learn',
   Super: 'Super',
   Leaderboard: 'Leaderboard',
   Profile: 'Profile',
+  ProfileNavigator: 'ProfileNavigator',
   SignUp: 'SignUp',
   SignIn: 'SignIn',
+  QuizNaviagtor: 'QuizNavigator',
+  Quiz: 'Quiz',
+  QuizSummary: 'Quiz Summary'
 }

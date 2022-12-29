@@ -20,15 +20,47 @@ export const mainColor = {
 	white: '#FFFFFF',
 	black: '#100F0F',
 	misty: '#C3CEDA',
+	blue: 'blue',
+	blue30: '#1ca3fc',
+	blueSky: '#03d7fc',
 	blueGray: '#738FA7',
 	darkGreen: '#0F3D3E',
 	yellow: '#ECF87F',
 	darkGrey: '#404452',
+	grey: '#aaaaaa',
+	greyC: '#cccccc',
 	primary100: '#f9beda',
   primary500: '#c30b64',
   primary800: '#610440',
+  red: 'red',
+  error: 'red',
   error100: '#fcdcbf',
   error500: '#f37c13',
+	gold: 'gold',
+	orange: 'orange',
+}
+
+export const mainText = {
+	baseHeader: {
+		color: mainColor.darkGrey,
+		fontFamily: 'open-sans-bold',
+		fontSize: 16,
+	},
+	baseHeader2: {
+		color: mainColor.darkGrey,
+		fontFamily: 'open-sans-bold',
+		fontSize: 14,
+	},
+	baseInfo: {
+		color: mainColor.grey,
+		fontFamily: 'open-sans-bold',
+		fontSize: 12,
+	},
+	baseText: {
+		fontFamily: 'open-sans-bold',
+		color: mainColor.darkGrey,
+		fontSize: 12,
+	}
 }
 
 export const buttonPressed = {
