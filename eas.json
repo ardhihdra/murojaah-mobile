@@ -1,0 +1,47 @@
+{
+  "cli": {
+    "version": ">= 3.1.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "extends": "production",
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    },
+    "production": {
+      "env": {
+        "API_URL": "https://company.com/api",
+        "SALT": "35kj7waj3k5kja09jeoi21kn0pg13iuhlkn",
+        "JWT_SECRET": "2fdb3fdba53622497a02888865dffed6c71cfaad48647ea3ed9e40662df5341abb6a94f136ff89229ca4695d62c4033bd7296103c55d3eb508010476142dceea",
+        "SESSION_SECRET": "secret",
+        "PORT": "8000",
+        "SERVER_ADDRESS": "127.0.0.1",
+        "NODE_ENV": "development",
+        "DB_USERNAME": "postgres",
+        "DB_PASSWORD": "postgres",
+        "DB_NAME": "murojaah",
+        "DB_HOSTNAME": "localhost",
+        "DB_CLOUD_USERNAME": "ixwktlwowngszx",
+        "DB_CLOUD_PASSWORD": "2f0fe437968d5c18f4f93f392f4b0221a12ab81af443e3dfac0382c153006b36",
+        "DB_CLOUD_NAME": "de44g8de641ov8",
+        "DB_CLOUD_HOSTNAME": "ec2-34-237-166-54.compute-1.amazonaws.com",
+        "firebase_apiKey": "AIzaSyC1akcPRGOqDKHuYGnqO9y598-2r1Kc25U",
+        "firebase_authDomain": "murojaah-159bb.firebaseapp.com",
+        "firebase_projectId": "murojaah-159bb",
+        "firebase_storageBucket": "murojaah-159bb.appspot.com",
+        "firebase_messagingSenderId": "282760367985",
+        "firebase_appId": "1:282760367985:web:426944e4c853795783f0d0",
+        "firebase_measurementId": "G-3WVF1BN6DM"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

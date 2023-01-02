@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+// import {
+//   GoogleSignin,
+//   GoogleSigninButton,
+//   statusCodes,
+// } from '@react-native-google-signin/google-signin';
 
 import FlatButton from '../FlatButton';
 import AuthForm from './AuthForm';
 import { ROUTES } from '@constants/routes';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { mainColor } from '@styles/Main.styles';
+import { mainColor, mainShadow, mainText } from '@styles/Main.styles';
+import { Button } from '@rneui/base';
 
 function AuthContent({ isLogin, onAuthenticate }) {
   const router = useRoute()
@@ -54,6 +60,10 @@ function AuthContent({ isLogin, onAuthenticate }) {
     onAuthenticate({ email, password });
   }
 
+  function SignInWithGoogle() {
+
+  }
+
   return (
     <View style={styles.authContent}>
       <AuthForm
@@ -61,9 +71,24 @@ function AuthContent({ isLogin, onAuthenticate }) {
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
+      {/* <Text style={[{marginVertical: 16, textAlign: 'center'}, mainText.baseInfo]}>Or</Text>
+      <Button
+        buttonStyle={{ borderRadius: 6 }}
+        icon={{
+          type: 'font-awesome',
+          name: 'google',
+          color: 'white',
+        }}
+        onPress={SignInWithGoogle}
+      >
+        Sign In With Google
+      </Button> */}
       <View style={styles.buttons}>
-        <FlatButton onPress={switchAuthModeHandler}>
-          {isLogin ? 'Create a new user' : 'Log in instead'}
+        <Text style={{ textAlign: 'center', ...mainText.baseText }}>
+          {isLogin ? 'Don`t have account?' : 'Got an account?'}
+        </Text>
+        <FlatButton onPress={switchAuthModeHandler} color={mainColor.primary}>
+          {isLogin ? 'Create a new user' : ' Log in instead'}
         </FlatButton>
       </View>
     </View>
@@ -78,14 +103,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
-    backgroundColor: mainColor.primary,
-    elevation: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.35,
-    shadowRadius: 4,
   },
   buttons: {
-    marginTop: 8,
+    marginTop: 16,
   },
 });

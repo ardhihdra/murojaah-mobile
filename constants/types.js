@@ -2,6 +2,7 @@ export const QUESTION_TYPES = {
   AYAH_AFTER: 'AYAH_AFTER',
   AYAH_BEFORE: 'AYAH_BEFORE',
   CONSTRUCT_AYAH: 'CONSTRUCT_AYAH',
+  CONSTRUCT_SURAH: 'CONSTRUCT_AYAH',
   PART_AYAH_AFTER: 'PART_AYAH_AFTER',
   PART_AYAH_BEFORE: 'PART_AYAH_BEFORE',
   AYAH_BY_NUMBER: 'AYAH_BY_NUMBER',
@@ -16,4 +17,11 @@ export const QUESTION_TYPES = {
 export const LANGUAGES = {
   id: 'indonesia',
   en: 'english',
+}
+
+export const LEVEL = {
+  hafidz: 623600,
+  advance: 155900*3,
+  intermediate: 155900*2,
+  beginner: 155900*1,
 }

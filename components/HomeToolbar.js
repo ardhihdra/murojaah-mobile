@@ -20,16 +20,22 @@ export default function HomeToolbar({
   return (
   <View style={styles.toolbar}>
     <View style={styles.toolbarStat}>
-      <Text style={[mainText.baseHeader2, { marginHorizontal: 12 }]}>{user.xp || 0} XP</Text>
-      <Text style={[mainText.baseHeader2, { marginHorizontal: 12 }]}>
-        {user.health || 0} {STRINGS.health[language].toUpperCase()}
+      <Text style={[mainText.baseHeader2, { marginHorizontal: 12, color: mainColor.primary800 }]}>
+        {user.xp || 0} XP
       </Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={[mainText.baseHeader2, { marginHorizontal: 12, color: mainColor.red }]}>
+          {user.health || 0}
+        </Text>
+        <FontAwesome name="plus-square" size={20} color={mainColor.red} />
+      </View>
     </View>
     <View style={styles.toolbarSetting}>
       <Pressable onPress={() => setModalVisible(!modalVisible)}>
-        <Text style={[mainText.baseHeader2, { marginHorizontal: 24 }]}>
+        <FontAwesome style={[{ marginHorizontal: 24 }]} name="language" size={20} color={mainColor.blue} />
+        {/* <Text style={[mainText.baseHeader2, { marginHorizontal: 24 }]}>
           {STRINGS.language[language]}
-        </Text>
+        </Text> */}
       </Pressable>
       <Pressable
         onPress={onRefresh} 

@@ -7,21 +7,21 @@ import { AuthContext } from "store/auth-context";
 import FriendItem from "./FriendItem";
 
 export default function FriendWidget({
-  style
+  style,
 }) {
   const [tab,setTab] = useState(0)
   const [following, setFollowing] = useState([])
-  const [followed, setFollowed] = useState([])
+  const [follower, setFollower] = useState([])
   const { user } = useContext(AuthContext)
 
   useEffect(() => {
     fetchFriendInfo(user.uid).then(res => {
       setFollowing(res[0])
-      setFollowed(res[1])
+      setFollower(res[1])
     })
   }, [])
 
-  const data = tab === 0 ? following: followed
+  const data = tab === 0 ? following: follower
 
   return (
     <View style={[styles.container,style]}>
@@ -41,7 +41,7 @@ export default function FriendWidget({
         <View style={{ alignItems: 'center' }}>
         {
           data.length ? (
-            <ScrollView style={{ width: '100%' }}>
+            <ScrollView style={{ width: '100%', maxHeight: 200 }}>
               {
                 data.map(dmf => {
                   return (
@@ -68,7 +68,7 @@ export default function FriendWidget({
 const styles = StyleSheet.create({
   container: {
     ...mainBorder,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   header: {
     flexDirection: 'row',

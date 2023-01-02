@@ -1,7 +1,6 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
+import { useContext, useEffect, useState } from "react"
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { Picker } from "@react-native-picker/picker";
 
 import { fetchJuzProgress } from "@api/juz";
 import JuzBox from "../components/JuzBox";
@@ -23,21 +22,25 @@ export default function JuzCategoriesScreen({ navigation, route }) {
   } = useContext(SettingsContext)
   const isFocused = useIsFocused();
 
-  if(!user?.uid) navigation.navigate(ROUTES.SignIn, {})
-  
   useFocusEffect(() => {
     setShowBottomBar(true)
   })
 
   useEffect(() => {
-    if(user) {
+    if(user && user.uid) {
       setGLoading(true)
-      updateUserInfo()
       getJuzProgress().finally(() => {
         setGLoading(false)
       })
     }
-  }, [isFocused])
+  }, [isFocused, user])
+
+  useEffect(() => {
+    setGLoading(true)
+    updateUserInfo().finally(() => {
+      setGLoading(false)
+    })
+  }, [isFocused]) 
 
   async function getJuzProgress() {
     if(user?.uid) {
@@ -49,6 +52,8 @@ export default function JuzCategoriesScreen({ navigation, route }) {
   function goToQuiz(id) {
     navigation.navigate(ROUTES.Quiz, { juzId: id })
   }
+
+  if(!user) return <></>
 
   return (
     <View style={styles.container}>

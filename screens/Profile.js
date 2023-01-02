@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,20 +14,40 @@ import { doc, getDoc } from "firebase/firestore";
 import { Input } from "@rneui/base";
 import UsersWidget from "@components/UsersWidget";
 import { useIsFocused } from "@react-navigation/native";
+import { editUserData } from "@api/auth";
+import { fetchFriendInfo } from "@api/friend";
 
 export default function Profile({
   navigation
 }) {
   const { logout: ctxLogout, user, updateUserInfo } = useContext(AuthContext)
   const [search, setSearch] = useState()
+  const [editForm, setEditForm] = useState({
+    name: user?.name
+  })
+  const [edit, setEdit] = useState(false)
+  const [following, setFollowing] = useState(0)
+  const [follower, setFollower] = useState(0)
   const isFocused = useIsFocused();
 
   useState(() => {
     updateUserInfo()
+    fetchFriendInfo(user.uid).then(res => {
+      setFollowing(res[0].length)
+      setFollower(res[1].length)
+    })
   }, [isFocused])
 
   async function logout() {
     ctxLogout()
+  }
+
+  async function updateProfile() {
+    await editUserData(user.uid, {
+      name: editForm.name
+    })
+    await updateUserInfo()
+    setEdit(false)
   }
 
   return (
@@ -37,12 +57,41 @@ export default function Profile({
           <Image alt='profile' />
         </View>
         <View style={styles.profileContainer}>
-          <Text style={styles.baseHeaderText}>Ardhi Rofi Mufdhila</Text>
-          <Text style={[styles.baseInfo,{marginBottom: 8}]}>{user.email}</Text>
+          <View style={{marginBottom: 8, flexDirection:'row', alignItems:'center'}}>
+            <View>
+              {
+                edit ?
+                <Input
+                  placeholder={'Change Name'}
+                  containerStyle={{ height: 40 }}
+                  inputContainerStyle={{ width: 200, height: 30 }}
+                  inputStyle={{ fontSize: 16 }}
+                  onChangeText={(value) => setEditForm({...editForm, name: value})}
+                  value={editForm.name}
+                />
+                :
+                <>
+                  <Text style={styles.baseHeaderText}>{user.name || 'Fulan'}</Text>
+                  <Text style={[styles.baseInfo]}>{user.email}</Text>
+                </>
+              }
+            </View>
+            <Pressable style={{marginLeft:16}} onPress={() => setEdit(!edit)}>
+              <MaterialIcons name={edit ? 'close': 'mode-edit'} size={18} color="black" />
+            </Pressable>
+            {
+              edit && 
+              <Pressable style={{marginLeft:12}} onPress={updateProfile}>
+                <MaterialIcons name='check' size={18} color="black" />
+              </Pressable>
+            }
+          </View>
           <Text style={styles.baseText}>
             Joined {user.createdOn?.seconds && new Date(user.createdOn?.seconds*1000).toDateString()} 
           </Text>
-          <Text style={styles.baseText}>6 Following | 2 Followers</Text>
+          <Text style={styles.baseText}>
+            {following || 0} Following | {follower || 0} Followers
+          </Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
             <Ionicons name="md-earth" size={18} color="black" />
             <Text style={[styles.baseText,{marginLeft: 4}]}>{user.country || 'Earth'}</Text>
@@ -70,6 +119,7 @@ export default function Profile({
           <Text style={[styles.baseHeaderText,{marginBottom: 24}]}>Friends</Text>
           <Input
             placeholder={'Find users'}
+            autoCapitalize='none'
             containerStyle={{}}
             inputContainerStyle={{}}
             inputStyle={{ fontSize: 16 }}

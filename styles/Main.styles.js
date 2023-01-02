@@ -24,6 +24,9 @@ export const mainColor = {
 	blue30: '#1ca3fc',
 	blueSky: '#03d7fc',
 	blueGray: '#738FA7',
+	whiteGreen: '#f5fffa',
+	lightGreenYellow: '#c5e1a5',
+	lightGreenBlue: '#a5d6c3',
 	darkGreen: '#0F3D3E',
 	yellow: '#ECF87F',
 	darkGrey: '#404452',
@@ -46,6 +49,11 @@ export const mainText = {
 		fontFamily: 'open-sans-bold',
 		fontSize: 16,
 	},
+	baseHeaderArab: {
+		color: mainColor.darkGrey,
+		fontFamily: 'open-sans-bold',
+		fontSize: 24,
+	},
 	baseHeader2: {
 		color: mainColor.darkGrey,
 		fontFamily: 'open-sans-bold',
@@ -58,6 +66,11 @@ export const mainText = {
 	},
 	baseText: {
 		fontFamily: 'open-sans-bold',
+		color: mainColor.darkGrey,
+		fontSize: 12,
+	},
+	normal: {
+		fontFamily: 'open-sans',
 		color: mainColor.darkGrey,
 		fontSize: 12,
 	}

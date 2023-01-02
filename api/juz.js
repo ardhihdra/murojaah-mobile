@@ -14,6 +14,7 @@ export async function fetchJuzProgress(userId, id=null) {
       query(
         collection(firestoreDb, 'UserAyahProgress'),
         where('userId', '==', userId),
+        where('wrong', '!=', true),
       )
     ))
   }
@@ -22,9 +23,9 @@ export async function fetchJuzProgress(userId, id=null) {
     
     const progressObj = {}
     const surahProgress = {}
+
     progressSnapshot.docs.map(psd => {
       const data = psd.data()
-
       if(!progressObj[data.juzIndex]) progressObj[data.juzIndex] = 0 
       
       const tracker = `${data.surahIndex}${data.ayahIndex}`

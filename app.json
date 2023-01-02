@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "murojaah-mobile",
-    "slug": "murojaah-mobile",
-    "version": "0.0.1",
+    "name": "Murojaah",
+    "slug": "murojaah",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,17 +18,25 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "0.1.0",
       "supportsTablet": true,
       "backgroundColor": "#d9ffe7"
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#d9ffe7"
-      }
+      },
+      "package": "com.ardhihdra.murojaah"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bb935f24-499e-48bd-9ad9-51aeb8b53206"
+      }
     }
   }
 }

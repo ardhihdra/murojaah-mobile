@@ -1,11 +1,11 @@
 import { createUser } from "@api/auth"
-import { FieldValue } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 
 export default class User {
   constructor({
     id, name, email, emailVerified, 
     level, health, streak, dirham, photoURL,
-    phoneNumber,
+    phoneNumber, country
   }) {
     this.id = id || ''
     this.name = name || ''
@@ -36,7 +36,7 @@ export default class User {
       photoURL: this.photoURL,
       phoneNumber: this.phoneNumber,
       country: this.country,
-      createdAt: FieldValue.serverTimestamp()
+      createdAt: Timestamp.now()
     })
     return creation
   }

@@ -50,6 +50,18 @@ const STRINGS =  {
   health: {
     en: 'Health',
     id: 'Kesehatan'
+  },
+  start: {
+    en: 'start',
+    id: 'awal',
+  },
+  middle: {
+    en: 'middle',
+    id: 'tengah',
+  },
+  end: {
+    en: 'end',
+    id: 'akhir',
   }
 }
 

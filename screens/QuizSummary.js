@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import MainButton from "@components/MainButton";
 import { ROUTES } from "@constants/routes";
-import { saveAyahProgress, saveSurahProgress } from "@api/progress";
+import { saveAyahProgress, saveSurahProgress, saveWrongProgress } from "@api/progress";
 import { AuthContext } from "store/auth-context";
 import { updateXP } from "@api/user";
 import StatInCircle from "@components/StatInCircle";
@@ -21,6 +21,7 @@ export default function QuizSummary({
   const { 
     questionLength,
     correct,
+    wrong,
     title,
     trial,
   } = route.params;
@@ -32,7 +33,10 @@ export default function QuizSummary({
       saveSurahProgress(user.uid, user.email, indexes[0], indexes[1], indexes[2], 5)
       saveAyahProgress(user.uid, indexes[0], indexes[1], indexes[2], 10)
       updateXP(user.uid, xp)
-    })
+    });
+    (wrong || []).map(wr => {
+      saveWrongProgress(user.uid, wr.id, wr.type, wr.answered, wr.options)
+    });
   }, [])
 
   return (
@@ -40,7 +44,7 @@ export default function QuizSummary({
       <View style={styles.summaryBox}>
         <Text style={styles.summaryText}>{QUIZ_STRINGS.lesson_complete[language]}!</Text>
         <Text style={styles.summaryText}>
-          {STRINGS.learning[language]} {title}
+          {`${STRINGS.learning[language]} ${title}`} 
         </Text>
       </View>
       <Image
@@ -83,7 +87,6 @@ const styles = StyleSheet.create({
   summaryBox: {
     margin: 30,
     justifyContent: 'center',
-    flexDirection: 'space-between'
   },
   statBox: {
     flexDirection: 'row',

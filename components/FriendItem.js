@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "store/auth-context";
 import { addFriend, checkIsFriend } from "@api/friend";
 import { Button, Dialog } from "@rneui/themed";
+import { LEVEL } from "@constants/types";
 
 export default function FriendItem({
   data
@@ -36,6 +37,13 @@ export default function FriendItem({
       Alert.alert('Error', err?.message)
     })
   }
+
+  function getLevel(xp) {
+    if(xp >= LEVEL.hafidz) return 'Hafidz'
+    else if(xp >= LEVEL.advance) return 'Advance'
+    else if(xp >= LEVEL.intermediate) return 'Intermediate'
+    else return 'Beginner'
+  }
   
   return (
     <View
@@ -46,7 +54,7 @@ export default function FriendItem({
         <Text style={mainText.baseInfo}>{data.email}</Text>
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <Flag backgroundColor={mainColor.primary} text='Hafidz' />
+        <Flag backgroundColor={mainColor.primary} text={getLevel(data.xp)} />
         {
           loading ? 
             <ActivityIndicator size="small" />

@@ -14,6 +14,7 @@ export async function fetchSurahProgress(userId) {
         query(
           collection(firestoreDb, 'UserAyahProgress'),
           where('userId', '==', userId),
+          where('wrong', '!=', true),
         )
       ))
     }

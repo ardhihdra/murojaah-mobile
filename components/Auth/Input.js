@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-import { mainColor } from '@styles/Main.styles';
+import { mainColor, mainText } from '@styles/Main.styles';
 
 function Input({
   label,
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
+    ...mainText.baseText,
     color: 'white',
     marginBottom: 4,
   },

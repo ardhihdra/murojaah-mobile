@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'static',
     width: '100%',
-    bottom: 330,
+    bottom: 360,
   },
   text: { 
     textAlign: 'left',

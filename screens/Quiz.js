@@ -1,11 +1,13 @@
+import { useContext, useEffect, useRef, useState } from "react";
+import { Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import Constants from 'expo-constants';
+
 import { getJuzQuestion, getSurahQuestion } from "@api/question";
 import MainButton from "@components/MainButton";
 import LoadingOverlay from "@components/LoadingOverlay";
 import { ROUTES } from "@constants/routes";
 import { useFocusEffect } from "@react-navigation/native";
 import { mainColor } from "@styles/Main.styles";
-import { useContext, useEffect, useRef, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import * as Progress from 'react-native-progress';
 import { SettingsContext } from "store/settings-context";
 import AnswerFeedback from "./Quiz/AnswerFeedback";
@@ -29,6 +31,7 @@ export default function Quiz({
   const [userAnswer, setUserAnswer] = useState()
   const [isCorrect, setIsCorrect] = useState(false)
   const [totalCorrect, setTotalCorrect] = useState([])
+  const [totalWrong, setTotalWrong] = useState([])
   const [totalTrial, setTotalTrial] = useState(0)
   const [hasFailed, setHasFailed] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -75,6 +78,13 @@ export default function Quiz({
     } else {
       setHasFailed(true)
       setAnswerFeedback(QUIZ_STRINGS.wrong_answer[language]+' :(')
+      setTotalWrong([
+        ...totalWrong,
+        {
+          ...qs,
+          answered: userAnswer,
+        }
+      ])
     }
   }
 
@@ -101,7 +111,6 @@ export default function Quiz({
     });
   }
 
-
   function onContinue() {
     resetState()
     setCurrentIdx(currentIdx+1)
@@ -109,6 +118,7 @@ export default function Quiz({
       navigation.navigate(ROUTES.QuizSummary, { 
         questionLength: questions.length,
         correct: totalCorrect,
+        wrong: totalWrong,
         trial: totalTrial,
         title: juzId ? `Juz ${juzId}`: `Surah ${surahData[Number(surahId)-1].title}`,
       })
@@ -118,7 +128,7 @@ export default function Quiz({
   if(loading) return <LoadingOverlay message="Loading Quiz..." />
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.progress}>
         <View style={styles.progressBox}>
           <Progress.Bar
@@ -170,6 +180,9 @@ export default function Quiz({
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    marginTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0 
+  },
   progress: {
     width: '100%',
     height: 56,

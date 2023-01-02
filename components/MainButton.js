@@ -32,7 +32,7 @@ export default MainButton;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 6,
-    paddingVertical: 6,
+    paddingVertical: 10,
     paddingHorizontal: 12,
     elevation: 2,
     shadowColor: 'black',

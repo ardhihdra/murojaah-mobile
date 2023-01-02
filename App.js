@@ -17,7 +17,8 @@ export default function App() {
   // Initialize Firebase Authentication and get a reference to the service
   const [fontsLoaded] = useFonts({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'open-sans-extra-bold-italic': require('./assets/fonts/OpenSans-ExtraBoldItalic.ttf'),
   })
   
 
