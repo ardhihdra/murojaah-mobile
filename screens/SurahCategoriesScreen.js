@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, SafeAreaView } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, SafeAreaView, Dimensions } from "react-native";
 import { fetchSurahProgress } from "@api/surah";
-import mainStyles, { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
+import { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
 import SurahBox from "@components/SurahBox";
 import { AuthContext } from "store/auth-context";
 import MainTooltip from "@components/MainTooltip";
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     ...mainShadow,
+    minHeight: Dimensions.get('window').height - 200,
   },
   tooltipText: {
     color: mainColor.white,

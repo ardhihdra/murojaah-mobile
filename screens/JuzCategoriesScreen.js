@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { 
+  Dimensions, ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, View
+} from "react-native"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 import { fetchJuzProgress } from "@api/juz";
@@ -119,15 +121,6 @@ export default function JuzCategoriesScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  toolkit: {
-    marginVertical: 8,
-    marginHorizontal: 48,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
   },
   juzContainer: {
     flex: 1,
@@ -136,11 +129,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16,
-    backgroundColor: mainColor.white,
     paddingTop: 16,
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
+    backgroundColor: mainColor.white,
     ...mainShadow,
+    alignItems:'center', justifyContent:'center',
+    alignSelf:'stretch',
+    minHeight: Dimensions.get('window').height - 200,
+    // minHeight: 550
   },
   progress: {
     margin: 4,

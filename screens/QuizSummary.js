@@ -20,11 +20,11 @@ export default function QuizSummary({
   const { language } = useContext(SettingsContext)
   const { 
     questionLength,
-    correct,
-    wrong,
     title,
     trial,
   } = route.params;
+  const correct = JSON.parse(route.params?.correct || '{}')
+  const wrong = JSON.parse(route.params?.wrong || '{}')
   const xp = correct.length*10
 
   useEffect(() => {
@@ -47,9 +47,9 @@ export default function QuizSummary({
           {`${STRINGS.learning[language]} ${title}`} 
         </Text>
       </View>
-      <Image
+      {/* <Image
         source={require('../assets/image/alhamdulillah.png')}
-        style={{ height: 120, width: 180, marginTop: 30, alignSelf: 'center' }} />
+        style={{ height: 120, width: 180, marginTop: 30, alignSelf: 'center' }} /> */}
       <View style={styles.bottomContainer}>
         <View style={styles.statBox}>
           <StatInCircle

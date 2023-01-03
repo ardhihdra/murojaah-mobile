@@ -148,12 +148,12 @@ export default function Profile({
         </View>
 
         <View style={{ marginVertical: 24, marginHorizontal: 24}}>
-          <MainButton
+          {/* <MainButton
             onPress={donate}
             style={{ marginVertical: 12 }}
           >
             {STRINGS.buy_me_coffee[language]}
-          </MainButton>
+          </MainButton> */}
           <FlatButton onPress={logout} color={mainColor.primary500}>
             <Text>Log Out</Text>
           </FlatButton>

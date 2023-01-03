@@ -23,7 +23,7 @@ export default function Quiz({
   route,
   navigation
 }) {
-  const TOTAL_QUESTION = 5
+  const TOTAL_QUESTION = 1
   const { juzId, surahId } = route.params || {};
   const { setShowBottomBar, language } = useContext(SettingsContext)
   const [questions, setQuestions] = useState([])
@@ -121,8 +121,8 @@ export default function Quiz({
     if(currentIdx+1 >= total_questions_fetched) {
       navigation.navigate(ROUTES.QuizSummary, { 
         questionLength: questions.length,
-        correct: totalCorrect,
-        wrong: totalWrong,
+        correct: JSON.stringify(totalCorrect),
+        wrong: JSON.stringify(totalWrong),
         trial: totalTrial,
         title: juzId ? `Juz ${juzId}`: `Surah ${surahData[Number(surahId)-1].title}`,
       })
