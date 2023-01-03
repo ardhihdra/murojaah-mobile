@@ -18,7 +18,7 @@ import WelcomeBar from "@components/WelcomeBar";
 import StatsBar from "@components/StatsBar";
 
 export default function JuzCategoriesScreen({ navigation, route }) {
-  const [juz, setJuz] = useState([])
+  const [juz, setJuz] = useState([{index:'01'}])
   const { user, updateUserInfo } = useContext(AuthContext)
   const [shouldShow, setShouldShow] = useState('')
   const {
@@ -83,7 +83,12 @@ export default function JuzCategoriesScreen({ navigation, route }) {
         {
           gLoading && <ActivityIndicator size='large'/>
         }
-        <View style={[styles.juzContainer]}>
+        <View
+          style={[
+            styles.juzContainer,
+            !juz.length && {minHeight: Dimensions.get('window').height}
+          ]}
+        >
           {
             juz.map(jz => {
               return (
@@ -136,7 +141,6 @@ const styles = StyleSheet.create({
     ...mainShadow,
     alignItems:'center', justifyContent:'center',
     alignSelf:'stretch',
-    minHeight: Dimensions.get('window').height - 200,
     // minHeight: 550
   },
   progress: {

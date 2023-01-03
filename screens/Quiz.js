@@ -23,7 +23,7 @@ export default function Quiz({
   route,
   navigation
 }) {
-  const TOTAL_QUESTION = 1
+  const TOTAL_QUESTION = 5
   const { juzId, surahId } = route.params || {};
   const { setShowBottomBar, language } = useContext(SettingsContext)
   const [questions, setQuestions] = useState([])

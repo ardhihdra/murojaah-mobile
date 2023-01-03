@@ -10,7 +10,13 @@ export default function ProfileNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name={ROUTES.Profile} component={Profile}/>
-      <Stack.Screen name={ROUTES.Donate} component={Donate}/>
+      <Stack.Screen
+        name={ROUTES.Donate}
+        options={{
+          title: '',
+          headerBackTitleVisible: false,
+        }}
+        component={Donate}/>
     </Stack.Navigator>
   );
 }

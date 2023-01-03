@@ -124,7 +124,7 @@ export default function Profile({
           <View style={styles.statisticsContainer}>
             <StatBox value={user.xp || 0} title='Experience' color={mainColor.primary}/>
             <StatBox value={user.dirham || 0} title='Dirham' style={{ marginLeft: 8 }} color={mainColor.primary800}/>
-            <StatBox value={user.streak || 0} title='Streak' style={{ marginTop: 12, marginLeft: 80 }} color={mainColor.red}/>            
+            <StatBox value={user.streak || 0} title='Streak' style={{ marginTop: 12 }} color={mainColor.red}/>            
           </View>
         </View>
 
@@ -148,12 +148,12 @@ export default function Profile({
         </View>
 
         <View style={{ marginVertical: 24, marginHorizontal: 24}}>
-          {/* <MainButton
+          <MainButton
             onPress={donate}
             style={{ marginVertical: 12 }}
           >
             {STRINGS.buy_me_coffee[language]}
-          </MainButton> */}
+          </MainButton>
           <FlatButton onPress={logout} color={mainColor.primary500}>
             <Text>Log Out</Text>
           </FlatButton>
@@ -208,5 +208,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 24,
+    justifyContent: 'center'
   }
 })

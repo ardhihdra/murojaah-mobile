@@ -50,6 +50,7 @@ export default function QuizSummary({
       {/* <Image
         source={require('../assets/image/alhamdulillah.png')}
         style={{ height: 120, width: 180, marginTop: 30, alignSelf: 'center' }} /> */}
+      <Text style={styles.alhamdulillah}>ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</Text>
       <View style={styles.bottomContainer}>
         <View style={styles.statBox}>
           <StatInCircle
@@ -97,5 +98,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 60,
     width: '100%',
+  },
+  alhamdulillah: {
+    fontSize: 44,
+    fontWeight: '800',
+    textAlign: 'center',
+    alignItems: 'center',
+    marginTop: 32,
   }
 })

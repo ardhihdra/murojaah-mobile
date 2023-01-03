@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, SafeAreaView, Dimensions } from "react-native";
+import { ScrollView, StyleSheet, Text, View, ActivityIndicator, Alert, SafeAreaView, Dimensions } from "react-native";
 import { fetchSurahProgress } from "@api/surah";
 import { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
 import SurahBox from "@components/SurahBox";
@@ -69,7 +69,11 @@ export default function SurahCategoriesScreen({
         {
           gLoading && <ActivityIndicator size='large'/>
         }
-        <View style={styles.surahContainer}>
+        <View
+          style={[
+            styles.surahContainer,
+            {minHeight: Dimensions.get('window').height}
+          ]}>
           {
             surahData.map(jz => {
               return (
@@ -131,7 +135,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     ...mainShadow,
-    minHeight: Dimensions.get('window').height - 200,
   },
   tooltipText: {
     color: mainColor.white,
