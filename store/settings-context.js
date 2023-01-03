@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const SettingsContext = createContext({
   showBottomBar: true,
   setShowBottomBar: () => null,
-  language: 'indonesia',
+  language: 'id',
   gLoading: false,
   setGLoading: () => null
 })

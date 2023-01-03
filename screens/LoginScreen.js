@@ -1,26 +1,27 @@
 import AuthContent from '../components/Auth/AuthContent';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import LoadingOverlay from '@components/LoadingOverlay';
 import { Alert, View } from 'react-native';
 import { signIn } from '@api/auth';
 import Logo from '@components/Logo';
+import { AuthContext } from 'store/auth-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function LoginScreen({ navigation }) {
+function LoginScreen({}) {
   const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const { setUser, setAuthToken, updateUserInfo } = useContext(AuthContext)
   // const [error, setError] = useState({})
   
-  async function onAuthenticate({ email, password }) {
+  function onAuthenticate({ email, password }) {
     setIsAuthenticating(true)
     
     signIn(email, password)
-      .then((response) => {
+      .then(async (response) => {
         // Signed in 
         console.log("Successfully Login")
         // authenticate(response)
-        
       })
       .catch((error) => {
-        console.log("SIGN IN ERROR", error)
         if (error.code === 'auth/user-not-found') {
           // Display signup form if the user does not exist
           Alert.alert('Auth Failed', 'User Not Found! You may want to Sign Up')

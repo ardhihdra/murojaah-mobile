@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { Alert, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import Constants from 'expo-constants';
 
 import { getJuzQuestion, getSurahQuestion } from "@api/question";
@@ -51,12 +51,16 @@ export default function Quiz({
     if(juzId) {
       getJuzQuestion(juzId, TOTAL_QUESTION).then(res => {
         setQuestions(res)
+      }).catch(err => {
+        Alert.alert('Error', err?.message)
       }).finally(() => {
         setLoading(false)
       })
     } else if(surahId) {
       getSurahQuestion(surahId, TOTAL_QUESTION).then(res => {
         setQuestions(res)
+      }).catch(err => {
+        Alert.alert('Error', err?.message)
       }).finally(() => {
         setLoading(false)
       })
@@ -125,9 +129,10 @@ export default function Quiz({
     }
   }
 
-  if(loading) return <LoadingOverlay message="Loading Quiz..." />
-
-  return (
+  return loading ? 
+    <LoadingOverlay message="Loading Quiz..." />
+  :
+  (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.progress}>
         <View style={styles.progressBox}>

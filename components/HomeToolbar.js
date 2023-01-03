@@ -19,17 +19,6 @@ export default function HomeToolbar({
 
   return (
   <View style={styles.toolbar}>
-    <View style={styles.toolbarStat}>
-      <Text style={[mainText.baseHeader2, { marginHorizontal: 12, color: mainColor.primary800 }]}>
-        {user.xp || 0} XP
-      </Text>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={[mainText.baseHeader2, { marginHorizontal: 12, color: mainColor.red }]}>
-          {user.health || 0}
-        </Text>
-        <FontAwesome name="plus-square" size={20} color={mainColor.red} />
-      </View>
-    </View>
     <View style={styles.toolbarSetting}>
       <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <FontAwesome style={[{ marginHorizontal: 24 }]} name="language" size={20} color={mainColor.blue} />
@@ -72,13 +61,10 @@ export default function HomeToolbar({
 
 const styles = StyleSheet.create({
   toolbar: {
-    marginVertical: 8,
+    marginVertical: 4,
     marginHorizontal: 20,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  toolbarStat: {
+    justifyContent: 'flex-end',
     flexDirection: 'row',
   },
   toolbarSetting: {

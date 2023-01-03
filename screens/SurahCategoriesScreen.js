@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable, ActivityIndicator } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, SafeAreaView } from "react-native";
 import { fetchSurahProgress } from "@api/surah";
-import mainStyles, { mainColor } from "../styles/Main.styles";
+import mainStyles, { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
 import SurahBox from "@components/SurahBox";
 import { AuthContext } from "store/auth-context";
 import MainTooltip from "@components/MainTooltip";
@@ -11,6 +11,7 @@ import { SettingsContext } from "store/settings-context";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "@constants/routes";
 import HomeToolbar from "@components/HomeToolbar";
+import StatsBar from "@components/StatsBar";
 
 export default function SurahCategoriesScreen({
   navigation,
@@ -18,13 +19,16 @@ export default function SurahCategoriesScreen({
 }) {
   const [surahData, setSurahData] = useState([])
   const [shouldShow, setShouldShow] = useState('')
-  const { user, updateUserInfo } = useContext(AuthContext)
+  const { user, token, updateUserInfo, logout } = useContext(AuthContext)
   const {
     setShowBottomBar, language, gLoading, setGLoading
   } = useContext(SettingsContext)
   const isFocused = useIsFocused();
 
-  if(!user?.uid) navigation.navigate(ROUTES.SignIn, {})
+  if(!token) {
+    Alert.alert('Token Expired')
+    logout()
+  }
 
   useFocusEffect(() => {
     setShowBottomBar(true)
@@ -33,7 +37,7 @@ export default function SurahCategoriesScreen({
   useEffect(() => {
     if(user) {
       setGLoading(true)
-      updateUserInfo()
+      // updateUserInfo()
       getSurahData().finally(() => setGLoading(false))
     }
   }, [isFocused])
@@ -49,13 +53,22 @@ export default function SurahCategoriesScreen({
     navigation.navigate(ROUTES.Quiz, { surahId: id })
   }
 
+  function getCoverage() {
+    let result = 0
+    surahData.map(sr => {
+      result += Number(sr.progress || 0)
+    })
+    return (result/(surahData.length || 1)).toFixed(2)
+  }
+
   return (
-    <View style={styles.container}>
-      <HomeToolbar onRefresh={getSurahData} />
-      {
-        gLoading && <ActivityIndicator size='large'/>
-      }
+    <SafeAreaView style={[styles.container,mainSpace.safeArea]}>
       <ScrollView>
+        <HomeToolbar onRefresh={getSurahData} />
+        <StatsBar style={{ marginVertical: 24 }} coverage={getCoverage()}/>
+        {
+          gLoading && <ActivityIndicator size='large'/>
+        }
         <View style={styles.surahContainer}>
           {
             surahData.map(jz => {
@@ -97,7 +110,7 @@ export default function SurahCategoriesScreen({
           }
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -112,8 +125,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 40,
+    backgroundColor: mainColor.white,
+    paddingTop: 16,
+    paddingBottom: 24,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    ...mainShadow,
   },
   tooltipText: {
     color: mainColor.white,

@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
+import Constants from 'expo-constants';
 
 export const mainFont = {
 	primary: 'open-sans',
@@ -44,6 +45,11 @@ export const mainColor = {
 }
 
 export const mainText = {
+	title: {
+		color: mainColor.darkGrey,
+		fontFamily: 'open-sans-bold',
+		fontSize: 22,
+	},
 	baseHeader: {
 		color: mainColor.darkGrey,
 		fontFamily: 'open-sans-bold',
@@ -94,7 +100,10 @@ export const mainSpace = {
 	mr: {marginRight: 8},
 	mrLg: {marginRight: 16},
 	mx: {marginRight:8, marginLeft:8},
-	mxLg: {marginRight:16, marginLeft:16}
+	mxLg: {marginRight:16, marginLeft:16},
+	safeArea: {
+    marginTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0 
+  }
 }
 
 const mainStyles = StyleSheet.create({

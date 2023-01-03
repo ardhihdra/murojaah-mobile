@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useContext, useState } from "react";
+import { Alert, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -9,18 +9,21 @@ import { AuthContext } from "store/auth-context";
 import StatBox from "@components/StatBox";
 import MainButton from "@components/MainButton";
 import FriendWidget from "@components/FriendWidget";
-import { firestoreDb } from "db/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import { Input } from "@rneui/base";
 import UsersWidget from "@components/UsersWidget";
 import { useIsFocused } from "@react-navigation/native";
 import { editUserData } from "@api/auth";
 import { fetchFriendInfo } from "@api/friend";
+import { Button } from "@rneui/themed";
+import STRINGS from "@constants/strings/strings";
+import { SettingsContext } from "store/settings-context";
+import { ROUTES } from "@constants/routes";
 
 export default function Profile({
   navigation
 }) {
   const { logout: ctxLogout, user, updateUserInfo } = useContext(AuthContext)
+  const { language } = useContext(SettingsContext)
   const [search, setSearch] = useState()
   const [editForm, setEditForm] = useState({
     name: user?.name
@@ -31,11 +34,13 @@ export default function Profile({
   const isFocused = useIsFocused();
 
   useState(() => {
-    updateUserInfo()
-    fetchFriendInfo(user.uid).then(res => {
-      setFollowing(res[0].length)
-      setFollower(res[1].length)
-    })
+    // updateUserInfo()
+    // fetchFriendInfo(user.uid).then(res => {
+    //   setFollowing(res[0].length)
+    //   setFollower(res[1].length)
+    // }).catch(err => {
+    //   Alert.alert('Failed to get friends', err?.message)
+    // })
   }, [isFocused])
 
   async function logout() {
@@ -45,9 +50,17 @@ export default function Profile({
   async function updateProfile() {
     await editUserData(user.uid, {
       name: editForm.name
+    }).catch(err => {
+      Alert.alert('Failed to edit', err?.message)
     })
-    await updateUserInfo()
+    await updateUserInfo().catch(err => {
+      Alert.alert('Something went wrong', err?.message)
+    })
     setEdit(false)
+  }
+
+  async function donate() {
+    navigation.navigate(ROUTES.Donate)
   }
 
   return (
@@ -134,7 +147,13 @@ export default function Profile({
           }
         </View>
 
-        <View style={{ marginVertical: 32 }}>
+        <View style={{ marginVertical: 24, marginHorizontal: 24}}>
+          <MainButton
+            onPress={donate}
+            style={{ marginVertical: 12 }}
+          >
+            {STRINGS.buy_me_coffee[language]}
+          </MainButton>
           <FlatButton onPress={logout} color={mainColor.primary500}>
             <Text>Log Out</Text>
           </FlatButton>

@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    ...mainShadow
+    ...mainShadow,
+    elevation: 4
   },
   title: {
     fontWeight: '500',

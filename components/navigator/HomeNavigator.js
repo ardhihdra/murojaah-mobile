@@ -16,9 +16,14 @@ export default function HomeNavigator({ navigation }) {
   })
 
   return (
-    <Stack.Navigator
-    >
-      <Stack.Screen name={ROUTES.JuzCategories} component={JuzCategoriesScreen}/>
+    <Stack.Navigator>
+      <Stack.Screen
+        name={ROUTES.JuzCategories}
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+        }}
+        component={JuzCategoriesScreen}/>
       {/* <Stack.Screen name={ROUTES.QuizNaviagtor} component={QuizNavigator} /> */}
       <Stack.Screen name={ROUTES.Quiz} component={Quiz}
         options={{

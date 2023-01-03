@@ -8,6 +8,7 @@ export const ROUTES = {
   Super: 'Super',
   Leaderboard: 'Leaderboard',
   Profile: 'Profile',
+  Donate: 'Donate',
   ProfileNavigator: 'ProfileNavigator',
   SignUp: 'SignUp',
   SignIn: 'SignIn',

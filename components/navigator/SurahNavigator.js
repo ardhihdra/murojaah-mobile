@@ -8,7 +8,13 @@ const Stack = createNativeStackNavigator();
 export default function SurahNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={ROUTES.SurahCategories} component={SurahCategoriesScreen}/>
+      <Stack.Screen
+        name={ROUTES.SurahCategories}
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+        }}
+        component={SurahCategoriesScreen}/>
     </Stack.Navigator>
   );
 }

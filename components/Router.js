@@ -5,8 +5,9 @@ import { useContext } from "react";
 import { AuthContext } from "store/auth-context";
 
 export default function Router({}) {
-  const { isAuthenticated } = useContext(AuthContext)
-  
+  const { token } = useContext(AuthContext)
+
+  const isAuthenticated = !!token
   return (
     <NavigationContainer>
     {

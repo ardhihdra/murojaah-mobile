@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { auth, firestoreDb } from "db/firebase";
+import { Alert } from "react-native";
 
 // GoogleSignin.configure();
 
@@ -13,6 +14,7 @@ export const AuthContext = createContext({
   user: {},
   isAuthenticated: false,
   updateUserInfo: () => null,
+  fetchUserData: () => null,
   // authenticate: (response) => {},
   logout: () => {},
 })
@@ -27,19 +29,26 @@ export function AuthProvider({children}) {
     AsyncStorage.getItem('token').then(token => {
       if(token) setAuthToken(token)
     })
+    AsyncStorage.getItem('user').then(user => {
+      if(user) setUser(JSON.parse(user))
+    })
+
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         // const uid = user.uid;
-        setAuthToken(user.accessToken)
         AsyncStorage.setItem('token', user.accessToken)
         const userInfo = {...user}
-        const userData = await fetchUserData(userInfo.uid)
+        const userData = await fetchUserData(userInfo.uid).catch(err => {
+          Alert.alert('Error user data', err?.message)
+        })
         if(userData) Object.assign(userInfo, userData)
         delete userInfo.stsTokenManager
         delete userInfo.accessToken
+        AsyncStorage.setItem('user', JSON.stringify(userInfo))
         setUser(userInfo)
+        setAuthToken(user.accessToken)
         // ...
       } else {
         // User is signed out
@@ -64,15 +73,21 @@ export function AuthProvider({children}) {
         setAuthToken(null)
         setUser({})
         AsyncStorage.removeItem('token')
+        AsyncStorage.removeItem('user')
       }).catch((error) => {
         // An error happened.
+        Alert.alert('Something went wrong', error?.message)
       });
   }
 
-  async function updateUserInfo() {
-    if(user?.uid) {
-      const userData = await fetchUserData(user.uid)
-      if(userData) setUser(Object.assign(user, userData))
+  async function updateUserInfo(userId=user?.id) {
+    if(userId) {
+      let userData = await fetchUserData(user.uid)
+      if(userData) {
+        userData = Object.assign(user, userData)
+        setUser(userData)
+      }
+      return userData
     }
   }
 
@@ -81,6 +96,7 @@ export function AuthProvider({children}) {
     user: user,
     isAuthenticated: !!authToken,
     updateUserInfo: updateUserInfo,
+    fetchUserData: fetchUserData,
     // authenticate: authenticate,
     logout: logout
   }

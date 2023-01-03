@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 import { fetchJuzProgress } from "@api/juz";
 import JuzBox from "../components/JuzBox";
 import { ROUTES } from "../constants/routes";
-import { mainColor } from "../styles/Main.styles";
+import { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
 import { AuthContext } from "store/auth-context";
 import MainTooltip from "@components/MainTooltip";
 import MainButton from "@components/MainButton";
 import { SettingsContext } from "store/settings-context";
 import STRINGS from "@constants/strings/strings";
 import HomeToolbar from "@components/HomeToolbar";
+import WelcomeBar from "@components/WelcomeBar";
+import StatsBar from "@components/StatsBar";
 
 export default function JuzCategoriesScreen({ navigation, route }) {
   const [juz, setJuz] = useState([])
@@ -29,22 +31,29 @@ export default function JuzCategoriesScreen({ navigation, route }) {
   useEffect(() => {
     if(user && user.uid) {
       setGLoading(true)
-      getJuzProgress().finally(() => {
+      getJuzProgress().catch(err => {
+        Alert.alert('Error getJuzProgress', err?.message)
+      }).finally(() => {
         setGLoading(false)
       })
     }
   }, [isFocused, user])
 
   useEffect(() => {
+    console.log("updateUserInfo called", user)
     setGLoading(true)
-    updateUserInfo().finally(() => {
+    updateUserInfo().catch(err => {
+      Alert.alert('Error updateUserInfo', err?.message)
+    }).finally(() => {
       setGLoading(false)
     })
   }, [isFocused]) 
 
   async function getJuzProgress() {
     if(user?.uid) {
-      const result = await fetchJuzProgress(user.uid)
+      const result = await fetchJuzProgress(user.uid).catch(err => {
+        Alert.alert('Error', err?.message)
+      })
       setJuz(result)
     }
   }
@@ -53,12 +62,22 @@ export default function JuzCategoriesScreen({ navigation, route }) {
     navigation.navigate(ROUTES.Quiz, { juzId: id })
   }
 
+  function getCoverage() {
+    let result = 0
+    juz.map(jz => {
+      result += Number(jz.progress || 0)
+    })
+    return (result/(juz.length || 1)).toFixed(2)
+  }
+
   if(!user) return <></>
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container,mainSpace.safeArea]}>
       <ScrollView>
         <HomeToolbar onRefresh={getJuzProgress} />
+        <WelcomeBar />
+        <StatsBar coverage={getCoverage()} />
         {
           gLoading && <ActivityIndicator size='large'/>
         }
@@ -93,7 +112,7 @@ export default function JuzCategoriesScreen({ navigation, route }) {
           }
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -116,7 +135,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16
+    marginTop: 16,
+    backgroundColor: mainColor.white,
+    paddingTop: 16,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    ...mainShadow,
   },
   progress: {
     margin: 4,
