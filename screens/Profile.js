@@ -14,7 +14,6 @@ import UsersWidget from "@components/UsersWidget";
 import { useIsFocused } from "@react-navigation/native";
 import { editUserData } from "@api/auth";
 import { fetchFriendInfo } from "@api/friend";
-import { Button } from "@rneui/themed";
 import STRINGS from "@constants/strings/strings";
 import { SettingsContext } from "store/settings-context";
 import { ROUTES } from "@constants/routes";
@@ -34,13 +33,15 @@ export default function Profile({
   const isFocused = useIsFocused();
 
   useState(() => {
-    // updateUserInfo()
-    fetchFriendInfo(user.uid).then(res => {
-      setFollowing(res[0].length)
-      setFollower(res[1].length)
-    }).catch(err => {
-      Alert.alert('Failed to get friends', err?.message)
-    })
+    if(isFocused) {
+      updateUserInfo()
+      fetchFriendInfo(user.uid).then(res => {
+        setFollowing(res[0].length)
+        setFollower(res[1].length)
+      }).catch(err => {
+        Alert.alert('Failed to get friends', err?.message)
+      })
+    }
   }, [isFocused])
 
   async function logout() {
