@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { View, Text, SafeAreaView, StyleSheet, Linking, Alert } from "react-native";
 import { Input } from '@rneui/themed';
+import * as MailComposer from 'expo-mail-composer';
 
 import MainButton from "@components/MainButton";
 import STRINGS from "@constants/strings/strings";
 import { mainColor, mainText } from "@styles/Main.styles";
 import { SettingsContext } from "store/settings-context";
+import { MailComposerStatus } from "expo-mail-composer";
 
 const message = `Hi, I'd love to support it in any way I can!`;
 const email = 'ardhi.rofi@gmail.com'
@@ -27,11 +29,11 @@ export default function Donate({
     Alert.alert('Future Feature!')
   }
 
-  async function openEmail() {
-    const url = `mailto: ${email}?subject=${subject}&body=${message}`
+  async function openEmailLinking() {
+    const url = `message://${email}?subject=${subject}&body=${message}`
     const errMessage = "Can't Open Email"
     const isAvailable = await Linking.canOpenURL(url).catch(err => {
-      Alert.alert(errMessage)
+      Alert.alert(err || errMessage)
     })
     if(isAvailable) Linking.openURL(url);
     else {
@@ -40,11 +42,35 @@ export default function Donate({
     }
   }
 
+  async function openEmail() {
+    const isAvailableIOS = await MailComposer.isAvailableAsync()
+    if(isAvailableIOS) {
+      const compose = await MailComposer.composeAsync({
+        subject: subject,
+        recipients: [email],
+        body: message
+      })
+      switch(compose) {
+        case MailComposerStatus.CANCELLED:
+          Alert.alert('Failed', 'Send Email Canceled')
+        case MailComposerStatus.SAVED:
+          Alert.alert('Failed', 'Email Saved')
+        case MailComposerStatus.SENT:
+          Alert.alert('Failed', 'Email Sent')
+        case MailComposerStatus.UNDETERMINED:
+          Alert.alert('Failed', 'Email Undetermined')
+      }
+    } else {
+      openEmailLinking()
+    }
+    
+  }
+
   async function openWhatsapp() {
     const url = `whatsapp://send?phone=${phoneNumber}&text=${message}`
     const errMessage = "Can't Open Whatsapp"
     const isAvailable = await Linking.canOpenURL(url).catch(err => {
-      Alert.alert(errMessage)
+      Alert.alert(err || errMessage)
     })
     if(isAvailable) Linking.openURL(url);
     else Alert.alert(errMessage)

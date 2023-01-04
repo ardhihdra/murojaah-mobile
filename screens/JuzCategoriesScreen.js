@@ -18,7 +18,7 @@ import WelcomeBar from "@components/WelcomeBar";
 import StatsBar from "@components/StatsBar";
 
 export default function JuzCategoriesScreen({ navigation, route }) {
-  const [juz, setJuz] = useState([{index:'01'}])
+  const [juz, setJuz] = useState([])
   const { user, updateUserInfo } = useContext(AuthContext)
   const [shouldShow, setShouldShow] = useState('')
   const {

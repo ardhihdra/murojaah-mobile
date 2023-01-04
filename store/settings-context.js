@@ -11,7 +11,7 @@ export const SettingsContext = createContext({
 
 export function SettingsProvider({children}) {
   const [showBottomBar, setShowBottomBar] = useState(true)
-  const [language, setLanguage] = useState('id')
+  const [language, setLanguage] = useState('en')
   const [gLoading, setGLoading] = useState(false)
 
   const value = {
