@@ -35,12 +35,12 @@ export default function Profile({
 
   useState(() => {
     // updateUserInfo()
-    // fetchFriendInfo(user.uid).then(res => {
-    //   setFollowing(res[0].length)
-    //   setFollower(res[1].length)
-    // }).catch(err => {
-    //   Alert.alert('Failed to get friends', err?.message)
-    // })
+    fetchFriendInfo(user.uid).then(res => {
+      setFollowing(res[0].length)
+      setFollower(res[1].length)
+    }).catch(err => {
+      Alert.alert('Failed to get friends', err?.message)
+    })
   }, [isFocused])
 
   async function logout() {

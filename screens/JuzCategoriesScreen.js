@@ -31,7 +31,7 @@ export default function JuzCategoriesScreen({ navigation, route }) {
   })
 
   useEffect(() => {
-    if(user && user.uid) {
+    if(user && user.uid && isFocused) {
       setGLoading(true)
       getJuzProgress().catch(err => {
         Alert.alert('Error getJuzProgress', err?.message)
@@ -42,13 +42,14 @@ export default function JuzCategoriesScreen({ navigation, route }) {
   }, [isFocused, user])
 
   useEffect(() => {
-    console.log("updateUserInfo called", user)
-    setGLoading(true)
-    updateUserInfo().catch(err => {
-      Alert.alert('Error updateUserInfo', err?.message)
-    }).finally(() => {
-      setGLoading(false)
-    })
+    if(isFocused) {
+      setGLoading(true)
+      updateUserInfo().catch(err => {
+        Alert.alert('Error updateUserInfo', err?.message)
+      }).finally(() => {
+        setGLoading(false)
+      })
+    }
   }, [isFocused]) 
 
   async function getJuzProgress() {
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     backgroundColor: mainColor.white,
     ...mainShadow,
-    alignItems:'center', justifyContent:'center',
+    alignItems:'center',
     alignSelf:'stretch',
     // minHeight: 550
   },

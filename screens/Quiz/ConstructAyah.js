@@ -111,13 +111,11 @@ const styles = StyleSheet.create({
   wordsQuestion: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'left',
     margin: 12,
   },
   wordsAnswer: {
     flexDirection: 'row-reverse',
     flexWrap: 'wrap',
-    justifyContent: 'left',
     marginVertical: 16,
   }
 })

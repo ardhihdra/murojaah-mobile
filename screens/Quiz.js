@@ -13,7 +13,7 @@ import { SettingsContext } from "store/settings-context";
 import AnswerFeedback from "./Quiz/AnswerFeedback";
 import QUIZ_STRINGS from "@constants/strings/quiz";
 import STRINGS from "@constants/strings/strings";
-import surahData from '../constants/surah.json';
+import surahData from '@constants/surah.json';
 import { QUESTION_TYPES } from "@constants/types";
 import MultipleChoice from "./Quiz/MultipleChoice";
 import ConstructAyah from "./Quiz/ConstructAyah";
@@ -43,10 +43,10 @@ export default function Quiz({
   })
 
   useEffect(() => {
-
+    initPage()
   }, [])
 
-  useEffect(() => {
+  function initPage() {
     setLoading(true)
     if(juzId) {
       getJuzQuestion(juzId, TOTAL_QUESTION).then(res => {
@@ -65,7 +65,7 @@ export default function Quiz({
         setLoading(false)
       })
     }
-  }, [])
+  }
  
   const qs = questions[currentIdx] || {}
   const total_questions_fetched = Math.min(TOTAL_QUESTION, questions.length)
@@ -137,7 +137,7 @@ export default function Quiz({
       <View style={styles.progress}>
         <View style={styles.progressBox}>
           <Progress.Bar
-            progress={currentIdx/total_questions_fetched}
+            progress={currentIdx/(total_questions_fetched || 1)}
             backgroundColor={mainColor.white}
             color={mainColor.secondary}
             width={320}
@@ -165,12 +165,12 @@ export default function Quiz({
           disabled={(!userAnswer && userAnswer !== 0 || isCorrect)}
           style={{ marginBottom: 16 }}
         >
-          {STRINGS.check[language].toUpperCase()}
+          {!!STRINGS.check[language] && STRINGS.check[language].toUpperCase()}
         </MainButton>
         {isCorrect && <MainButton
           onPress={onContinue}
         >
-          {STRINGS.continue[language].toUpperCase()}
+          {!!STRINGS.continue[language] && STRINGS.continue[language].toUpperCase()}
         </MainButton>}
       </View>
       <AnswerFeedback

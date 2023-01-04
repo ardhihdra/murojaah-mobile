@@ -28,13 +28,16 @@ export default function Donate({
   }
 
   async function openEmail() {
-    const url = `mailto:${email}?subject=${subject}&body=${message}`
+    const url = `mailto: ${email}?subject=${subject}&body=${message}`
     const errMessage = "Can't Open Email"
     const isAvailable = await Linking.canOpenURL(url).catch(err => {
       Alert.alert(errMessage)
     })
     if(isAvailable) Linking.openURL(url);
-    else Alert.alert(errMessage)
+    else {
+      Alert.alert(errMessage)
+      openWhatsapp()
+    }
   }
 
   async function openWhatsapp() {
