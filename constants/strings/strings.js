@@ -91,6 +91,14 @@ const STRINGS =  {
     en: 'Thank you again for your support',
     id: 'Sekali lagi terima kasih atas dukungan Anda',
   },
+  coverage: {
+    en: 'Coverage',
+    id: 'Cakupan'
+  },
+  health: {
+    en: 'Health',
+    id: 'Kesehatan'
+  }
 }
 
 export default STRINGS

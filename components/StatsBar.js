@@ -3,12 +3,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { mainColor, mainText } from '@styles/Main.styles';
 import { useContext } from 'react';
 import { AuthContext } from 'store/auth-context';
+import STRINGS from '@constants/strings/strings';
+import { SettingsContext } from 'store/settings-context';
 
 export default function StatsBar({
   style={},
   coverage
 }) {
   const { user } = useContext(AuthContext)
+  const { language } = useContext(SettingsContext)
 
   function textWithColor(color) {
     return  { textAlign: 'center' }
@@ -31,7 +34,7 @@ export default function StatsBar({
       </View> */}
       <View style={styles.statItem}>
         <Text style={[mainText.baseHeader, textWithColor(mainColor.primary500)]}>
-          {coverage || 0}
+          {coverage || 0}%
         </Text>
         <Text style={[mainText.baseInfo, textWithColor(mainColor.primary500)]}>Coverage</Text>
       </View>
@@ -39,7 +42,7 @@ export default function StatsBar({
         <Text style={[mainText.baseHeader, textWithColor(mainColor.red)]}>
         {user.health || 0}
         </Text>
-        <Text style={[mainText.baseInfo, textWithColor(mainColor.red)]}>Health</Text>
+        <Text style={[mainText.baseInfo, textWithColor(mainColor.red)]}>{STRINGS.health[language]}</Text>
       </View>
     </View>
   </View>
