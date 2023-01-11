@@ -41,7 +41,8 @@ export const mainColor = {
   error100: '#fcdcbf',
   error500: '#f37c13',
 	gold: 'gold',
-	orange: 'orange',
+	orange500: '#fb8c00',
+	orange100: '#ffa726',
 }
 
 export const mainText = {

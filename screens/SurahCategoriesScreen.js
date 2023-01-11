@@ -72,7 +72,7 @@ export default function SurahCategoriesScreen({
         <View
           style={[
             styles.surahContainer,
-            {minHeight: Dimensions.get('window').height}
+            !surahData.length && {minHeight: Dimensions.get('window').height}
           ]}>
           {
             surahData.map(jz => {

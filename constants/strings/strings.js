@@ -23,6 +23,10 @@ const STRINGS =  {
     en: 'Leaderboard',
     id: 'Ranking'
   },
+  statistics: {
+    en: 'Statistics',
+    id: 'Statistik'
+  },
   profile: {
     en: 'Profile',
     id: 'Profil'
@@ -98,6 +102,30 @@ const STRINGS =  {
   health: {
     en: 'Health',
     id: 'Kesehatan'
+  },
+  correct: {
+    en: 'Correct',
+    id: 'Benar',
+  },
+  wrong: {
+    en: 'Wrong',
+    id: 'Salah',
+  },
+  days: {
+    en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    id: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
+  },
+  weekly_progress: {
+    en: 'Weekly Progress',
+    id: 'Progress Mingguan',
+  },
+  statistics: {
+    en: 'Statistics',
+    id: 'Statistik',
+  },
+  mistakes_ratio: {
+    en: 'Mistakes Ratio',
+    id: 'Rasio Salah',
   }
 }
 

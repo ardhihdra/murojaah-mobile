@@ -1,5 +1,5 @@
 import { firestoreDb } from "db/firebase";
-import { Timestamp, addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { Timestamp, addDoc, collection, doc, getDoc, getDocs, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 
 const userAyahProgressRef = collection(firestoreDb, 'UserAyahProgress')
 const userSurahProgressRef = collection(firestoreDb, 'UserSurahProgress')
@@ -70,4 +70,18 @@ export async function saveSurahProgress(userId, email, juzIndex, surahIndex, aya
     }
     await setDoc(document, payload)
   }
+}
+
+export async function weeklyProgress(userId) {
+  const now = new Date()
+  const aweekBefore = new Date()
+  aweekBefore.setDate(now.getDate()-now.getDay())
+  const progressFetch = await getDocs(
+    query(
+      collection(firestoreDb, 'UserAyahProgress'),
+      where('userId', '==', userId),
+      where('createdAt', '>=', aweekBefore),
+    )
+  )
+  return progressFetch.docs
 }

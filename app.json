@@ -2,7 +2,7 @@
   "expo": {
     "name": "Murojaah",
     "slug": "murojaah",
-    "version": "0.1.1",
+    "version": "0.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,12 +18,12 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "0.1.0",
+      "buildNumber": "0.2.1",
       "supportsTablet": true,
       "backgroundColor": "#d9ffe7"
     },
     "android": {
-      "versionCode": 1,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#d9ffe7"

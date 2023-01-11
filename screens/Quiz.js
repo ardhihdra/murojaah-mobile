@@ -72,7 +72,10 @@ export default function Quiz({
 
   function onCheckAnswer() {
     let result = false
-    if(qs.type === QUESTION_TYPES.AYAH_AFTER) result = checkAyahAfter()
+    if(
+      qs.type === QUESTION_TYPES.AYAH_AFTER ||
+      qs.type === QUESTION_TYPES.AYAH_BEFORE
+    ) result = checkAyahAfter()
     if(qs.type === QUESTION_TYPES.CONSTRUCT_AYAH) result = checkConstructAnswer()
     setIsCorrect(result)
     setTotalTrial(totalTrial+1)
@@ -150,6 +153,10 @@ export default function Quiz({
           <View style={{ marginBottom: 48 }}>
             {
               qs.type === QUESTION_TYPES.AYAH_AFTER &&
+                <MultipleChoice data={qs} userAnswer={userAnswer} setUserAnswer={setUserAnswer} isCorrect={isCorrect} />              
+            }
+            {
+              qs.type === QUESTION_TYPES.AYAH_BEFORE &&
                 <MultipleChoice data={qs} userAnswer={userAnswer} setUserAnswer={setUserAnswer} isCorrect={isCorrect} />              
             }
             {
