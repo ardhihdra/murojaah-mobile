@@ -3,7 +3,8 @@ import { QUESTION_TYPES } from "@constants/types";
 export function createRandomQuestion(juzIndex, surahDetailInfo, ayahIndex) {
   const ran = Math.random()*100
   if(ran < 50) return createAyahAfterQuestion(juzIndex, surahDetailInfo, ayahIndex)
-  if(ran >= 50) return createConstructAyahQuestion(juzIndex, surahDetailInfo, ayahIndex)
+  else if(ran < 80) return createConstructAyahQuestion(juzIndex, surahDetailInfo, ayahIndex)
+  else return createAyahBeforeQuestion(juzIndex, surahDetailInfo, ayahIndex)
 }
 
 export function createSurahQuestion(type, juzIndex, surahDetailInfo, ayahIndex) {
@@ -17,6 +18,46 @@ export function createSurahQuestion(type, juzIndex, surahDetailInfo, ayahIndex) 
   }
 }
 
+function createOptionFrom(totalVerses, ayahIndexNumber, verse, answer) {
+  const maxOptions = Math.min(totalVerses-2,4)
+  let included = []
+  let options = []
+  let preventer = 0
+  while(Object.keys(options).length < maxOptions-1) {
+    preventer++;
+    const ran = Math.floor(Math.random()*(totalVerses))
+    if(ran !== ayahIndexNumber && ran !== ayahIndexNumber-1) {
+      if(verse[`verse_${ran}`] && !included.includes(ran)) {
+        options.push(verse[`verse_${ran}`])
+        included.push(ran)
+      }
+    }
+    if(preventer > 100) break
+  }
+  const ran = Math.floor(Math.random()*maxOptions)
+  options.splice(ran, 0, answer);
+  return [options,ran]
+}
+
+function createAyahBeforeQuestion(juzIndex, surahDetailInfo, ayahIndex) {
+  const { index, name, verse } = surahDetailInfo
+  const totalVerses = Object.keys(verse).length
+  ayahIndex = ayahIndex === 1 ? ayahIndex + 1: ayahIndex
+  const ayahIndexNumber = Number(ayahIndex)
+  const ayah = verse[`verse_${ayahIndex}`]
+  const ayahBefore = verse[`verse_${ayahIndexNumber-1}`]
+  const [options,answer] = createOptionFrom(totalVerses, ayahIndexNumber, verse, ayahBefore)
+
+  return {
+    id: `${juzIndex}:${index}:${ayahIndex}`,
+    type: QUESTION_TYPES.AYAH_BEFORE,
+    question: 'ayah_before_question',
+    quranQuestion: ayah,
+    options: options,
+    answer: answer,
+  }
+}
+
 function createAyahAfterQuestion(juzIndex, surahDetailInfo, ayahIndex) {
   const { index, name, verse } = surahDetailInfo
   const totalVerses = Object.keys(verse).length
@@ -24,32 +65,16 @@ function createAyahAfterQuestion(juzIndex, surahDetailInfo, ayahIndex) {
   const ayahIndexNumber = Number(ayahIndex)
   const ayah = verse[`verse_${ayahIndex}`]
   const ayahAfter = verse[`verse_${ayahIndexNumber+1}`]
-  const maxOptions = Math.min(totalVerses-2,4)
-  let options = []
-  let preventer = 0
-  while(Object.keys(options).length < maxOptions-1) {
-    preventer++;
-    const ran = Math.floor(Math.random()*(totalVerses))
-    if(ran !== ayahIndexNumber && ran !== ayahIndexNumber+1) {
-      if(verse[`verse_${ran}`] && !options.includes(verse[`verse_${ran}`])) {
-        options.push(verse[`verse_${ran}`])
-      }
-    }
-    if(preventer > 100) break
-  }
-  const ran = Math.floor(Math.random()*maxOptions)
-  options.splice(ran, 0, ayahAfter);
+  const [options,answer] = createOptionFrom(totalVerses, ayahIndexNumber, verse, ayahAfter)
 
-  const question = {
+  return {
     id: `${juzIndex}:${index}:${ayahIndex}`,
     type: QUESTION_TYPES.AYAH_AFTER,
     question: 'ayah_after_question',
     quranQuestion: ayah,
     options: options,
-    answer: ran,
+    answer: answer,
   }
-  
-  return question
 }
 
 function shuffleArray(array) {

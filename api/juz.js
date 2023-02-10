@@ -38,8 +38,9 @@ export async function fetchJuzProgress(userId, id=null) {
       if(!progressObj[data.juzIndex]) progressObj[data.juzIndex] = 0 
       
       const tracker = `${data.surahIndex}${data.ayahIndex}`
-      if(!surahProgress[tracker]) progressObj[data.juzIndex] += data.score
-      surahProgress[tracker] = true
+      // Math.min() to 100 as we only care maximum 100 point for this calculation
+      if(!surahProgress[tracker]) progressObj[data.juzIndex] += Math.min(data.score,100)
+      if(!data.wrong) surahProgress[tracker] = true
     })
     for(const qs of querySnapshot.docs) {
       const data = qs.data()

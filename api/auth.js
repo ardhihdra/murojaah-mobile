@@ -41,7 +41,7 @@ export async function signIn(email, password) {
 export async function createUser(params) {
   if(!params.id) throw 'user\' id is required'
   // const surahRef = await firestore().setDoc(doc(firestoreDb, "User", params.id), params);
-  const surahRef = await firestore().collection("User").add(params);
+  const surahRef = await firestore().collection("User").doc(params.id).set(params);
   return surahRef
 }
 

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "282760367985-8h539gvsf9232fvgd5ialp9tqmg7b12r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.murojaah.murojaah_mobile_7",
+            "certificate_hash": "c096bcee47aa319cb5d6cdb0f7b37e2adab57b08"
+          }
+        },
+        {
+          "client_id": "282760367985-ikkvr5ngnifgus8futamq53l0sh1ltf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.murojaah.murojaah_mobile_7",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "282760367985-m4p9n93938mcki3pk8i7i3s3bng4rgd0.apps.googleusercontent.com",
           "client_type": 3
         }

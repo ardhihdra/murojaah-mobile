@@ -10,6 +10,14 @@ const LEARN_STRINGS = {
   writing: {
     en: 'writing',
     id: 'penulisan',
+  },
+  learn_by_juz: {
+    en: 'Learn By Juz',
+    id: 'Berdasarkan Juz',
+  },
+  learn_by_surah: {
+    en: 'Learn By Surah',
+    id: 'Berdasarkan Surat',
   }
 }
 

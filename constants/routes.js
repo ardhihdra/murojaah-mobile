@@ -7,6 +7,7 @@ export const ROUTES = {
   Huruf: 'Learn',
   Super: 'Super',
   Leaderboard: 'Leaderboard',
+  Statistics: 'Statistics',
   Profile: 'Profile',
   Donate: 'Donate',
   ProfileNavigator: 'ProfileNavigator',

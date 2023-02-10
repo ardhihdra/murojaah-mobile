@@ -71,11 +71,11 @@ export async function checkIsFriend(userId, friendId) {
 export async function addFriend(userId, friendId) {
   // const collectionRef = collection(firestoreDb, 'Friend')
 
-  // const payload = {
-  //   following: userId,
-  //   followed: friendId,
-  //   createdAt: Timestamp.now()
-  // }
+  const payload = {
+    following: userId,
+    followed: friendId,
+    createdAt: Timestamp.now()
+  }
   // await addDoc(collectionRef, payload)
   await firestore().collection("Friend").add(payload);
 

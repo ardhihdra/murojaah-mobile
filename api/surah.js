@@ -33,12 +33,13 @@ export async function fetchSurahProgress(userId) {
       if(!progressObj[data.surahIndex]) progressObj[data.surahIndex] = 0 
       
       const tracker = `${data.surahIndex}${data.ayahIndex}`
-      if(!surahProgress[tracker]) progressObj[data.surahIndex] += data.score
-      surahProgress[tracker] = true
+      // Math.min() to 100 as we only care maximum 100 point for this calculation
+      if(!surahProgress[tracker]) progressObj[data.surahIndex] += Math.min(data.score,100)
+      if(!data.wrong) surahProgress[tracker] = true
     })
     for(const qs of querySnapshot.docs) {
       const data = qs.data()
-      data.progress = ((progressObj[qs.id] || 0)/data.count).toFixed(2)
+      data.progress = calculateSurahProgress(progressObj[qs.id], data.count)
       result.push(data)
     }
   } catch (e) {
@@ -46,4 +47,11 @@ export async function fetchSurahProgress(userId) {
   }
   return result
   // return !id ? ayahData: ayahData.filter(jd => jd.id === Number(id))
+}
+
+function calculateSurahProgress(totalScore=0, totalSurah=1) {
+  const minimumScorePerAyah = 100
+  const maximumScore = minimumScorePerAyah * totalSurah
+  return (totalScore/(totalSurah)).toFixed(2)
+  // return (Math.min(totalScore, maximumScore)/(totalSurah)).toFixed(2)
 }

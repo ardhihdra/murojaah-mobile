@@ -11,8 +11,15 @@ export async function getUserByEmail(email) {
     .collection('User')
     .where('email', '==', email)
     .get()
-  const userData = userFetch.data()
-  return userData
+  return userFetch
+}
+
+export async function updateUser(userId, payload) {
+  const userUpdate = await firestore()
+  .collection('User')
+  .doc(userId)
+  .update(payload)
+return userUpdate
 }
 
 export async function updateXP(userId, addition) {

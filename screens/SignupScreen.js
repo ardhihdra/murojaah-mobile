@@ -1,11 +1,11 @@
 import AuthContent from '../components/Auth/AuthContent';
 import { useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, SafeAreaView, View } from 'react-native';
 import { signUp } from '@api/auth';
 import User from 'db/models/User';
 import LoadingOverlay from '@components/LoadingOverlay';
-import { mainColor, mainShadow, mainText } from '@styles/Main.styles';
 import Logo from '@components/Logo';
+import { mainSpace } from '@styles/Main.styles';
 
 function SignupScreen({ navigation }) {
   const [isAuthenticating, setIsAuthenticating] = useState(false)
@@ -37,14 +37,19 @@ function SignupScreen({ navigation }) {
     return <LoadingOverlay message="Creating user..." />
   } else {
     return (
-      <View style={{
-        justifyContent: 'center',
-        flex: 1,
-        paddingBottom: 100,
-      }}>
-        <Logo />
-        <AuthContent onAuthenticate={onAuthenticate}/>
-      </View>
+      <SafeAreaView
+        style={[
+          { flex: 1 },
+          mainSpace.safeArea
+        ]}
+      >
+        <View style={{flex: 1, justifyContent: 'center', marginTop: 16 }}>
+          <Logo />
+        </View>
+        <View style={{flex: 3}}>
+          <AuthContent onAuthenticate={onAuthenticate}/>
+        </View>
+      </SafeAreaView>
     );
   }
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 
 import MainButton from "@components/MainButton";
 import { ROUTES } from "@constants/routes";
@@ -11,6 +11,7 @@ import { mainColor } from "@styles/Main.styles";
 import QUIZ_STRINGS from "@constants/strings/quiz";
 import { SettingsContext } from "store/settings-context";
 import STRINGS from "@constants/strings/strings";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function QuizSummary({
   navigation,
@@ -30,12 +31,18 @@ export default function QuizSummary({
   useEffect(() => {
     (correct || []).map(cr => {
       const indexes = cr.split(':')
-      saveSurahProgress(user.uid, user.email, indexes[0], indexes[1], indexes[2], 5)
-      saveAyahProgress(user.uid, indexes[0], indexes[1], indexes[2], 10)
+      saveSurahProgress(user.uid, user.email, indexes[0], indexes[1], indexes[2], 5).catch(err => {
+        Alert.alert('Error surah progress', err?.message)
+      })
+      saveAyahProgress(user.uid, indexes[0], indexes[1], indexes[2], 10).catch(err => {
+        Alert.alert('Error ayah progress', err?.message)
+      })
       updateXP(user.uid, xp)
     });
     (wrong || []).map(wr => {
-      saveWrongProgress(user.uid, wr.id, wr.type, wr.answered, wr.options)
+      saveWrongProgress(user.uid, wr.id, wr.type, wr.answered, wr.options).catch(err => {
+        Alert.alert('Error wrong progress', err?.message)
+      })
     });
   }, [])
 

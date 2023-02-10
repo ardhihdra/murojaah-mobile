@@ -1,7 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import STRINGS from "@constants/strings/strings";
-import { buttonPressed, mainColor, mainText } from '@styles/Main.styles';
+import { Pressable, StyleSheet, View } from "react-native";
+import { buttonPressed, mainColor } from '@styles/Main.styles';
 import MainModal from './MainModal';
 import { Picker } from '@react-native-picker/picker';
 import { useContext, useRef, useState } from 'react';

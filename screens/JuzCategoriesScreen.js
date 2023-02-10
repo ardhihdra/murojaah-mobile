@@ -5,26 +5,30 @@ import {
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 import { fetchJuzProgress } from "@api/juz";
-import JuzBox from "../components/JuzBox";
-import { ROUTES } from "../constants/routes";
-import { mainColor, mainShadow, mainSpace } from "../styles/Main.styles";
+import { mainColor, mainShadow, mainSpace, mainText } from "../styles/Main.styles";
 import { AuthContext } from "store/auth-context";
-import MainTooltip from "@components/MainTooltip";
-import MainButton from "@components/MainButton";
 import { SettingsContext } from "store/settings-context";
 import STRINGS from "@constants/strings/strings";
 import HomeToolbar from "@components/HomeToolbar";
 import WelcomeBar from "@components/WelcomeBar";
 import StatsBar from "@components/StatsBar";
+import { Switch } from "@rneui/base";
+import JuzList from "@components/JuzList";
+import SurahList from "@components/SurahList";
+import { fetchSurahProgress } from "@api/surah";
+import LEARN_STRINGS from "@constants/strings/learn";
 
 export default function JuzCategoriesScreen({ navigation, route }) {
   const [juz, setJuz] = useState([])
+  const [surahData, setSurahData] = useState([])
   const { user, updateUserInfo } = useContext(AuthContext)
   const [shouldShow, setShouldShow] = useState('')
   const {
     setShowBottomBar, language, gLoading, setGLoading
   } = useContext(SettingsContext)
   const isFocused = useIsFocused();
+  const [isLearnSurah, setIsLearnSurah] = useState(false);
+  const toggleSwitch = () => setIsLearnSurah(previousState => !previousState);
 
   useFocusEffect(() => {
     setShowBottomBar(true)
@@ -38,6 +42,7 @@ export default function JuzCategoriesScreen({ navigation, route }) {
       }).finally(() => {
         setGLoading(false)
       })
+      getSurahData().finally(() => setGLoading(false))
     }
   }, [isFocused, user])
 
@@ -61,16 +66,26 @@ export default function JuzCategoriesScreen({ navigation, route }) {
     }
   }
 
-  function goToQuiz(id) {
-    navigation.navigate(ROUTES.Quiz, { juzId: id })
+  async function getSurahData() {
+    if(user?.uid) {
+      const data = await fetchSurahProgress(user.uid)
+      setSurahData(data)
+    }
   }
 
   function getCoverage() {
     let result = 0
-    juz.map(jz => {
-      result += Number(jz.progress || 0)
-    })
-    return (result/(juz.length || 1)).toFixed(2)
+    if (isLearnSurah) {
+      surahData.map(sr => {
+        result += Number(sr.progress || 0)
+      })
+      return (result/(surahData.length || 1)).toFixed(2)
+    } else {
+      juz.map(jz => {
+        result += Number(jz.progress || 0)
+      })
+      return (result/(juz.length || 1)).toFixed(2)
+    }
   }
 
   if(!user) return <></>
@@ -81,42 +96,28 @@ export default function JuzCategoriesScreen({ navigation, route }) {
         <HomeToolbar onRefresh={getJuzProgress} />
         <WelcomeBar />
         <StatsBar coverage={getCoverage()} />
-        {
-          gLoading && <ActivityIndicator size='large'/>
-        }
         <View
           style={[
             styles.juzContainer,
-            !juz.length && {minHeight: Dimensions.get('window').height}
+            (!juz.length || gLoading) && {minHeight: Dimensions.get('window').height}
           ]}
         >
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            // thumbColor={isLearnSurah ? '#f5dd4b' : '#f4f3f4'}
+            thumbColor={isLearnSurah ? '#ffffff' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isLearnSurah}
+          />
+          <Text style={mainText.baseHeader}>
+            {isLearnSurah ? LEARN_STRINGS.learn_by_surah[language]: LEARN_STRINGS.learn_by_juz[language]}
+          </Text>
           {
-            juz.map(jz => {
-              return (
-                <MainTooltip
-                  key={jz.index}
-                  visible={shouldShow === jz.index}
-                  popover={
-                    <View style={{ alignItems: 'center' }}>
-                      <Text style={styles.tooltipText}>
-                        Juz {Number(jz.index)}
-                      </Text>
-                      <MainButton onPress={() => {
-                        goToQuiz(jz.index)
-                        setShouldShow('')
-                      }}
-                      >
-                        {STRINGS.continue_learning[language]}
-                      </MainButton>
-                    </View>
-                  }
-                  onOpen={() => setShouldShow(jz.index)}
-                  onClose={() => setShouldShow('')}
-                >
-                  <JuzBox juz={jz} />
-                </MainTooltip>
-              )
-            })
+            gLoading && <ActivityIndicator size='large'/>
+          }
+          {
+            isLearnSurah ? <SurahList surahData={surahData} /> : <JuzList juz={juz} />
           }
         </View>
       </ScrollView>
@@ -130,19 +131,21 @@ const styles = StyleSheet.create({
   },
   juzContainer: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 16,
     paddingTop: 16,
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     backgroundColor: mainColor.white,
     ...mainShadow,
-    alignItems:'center',
-    alignSelf:'stretch',
     // minHeight: 550
+  },
+  juzListContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf:'stretch',
   },
   progress: {
     margin: 4,

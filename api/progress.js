@@ -18,8 +18,10 @@ export async function saveWrongProgress(userId, index, type, answered, options) 
     createdAt: firestore.FieldValue.serverTimestamp(),
     // createdAt: Timestamp.now()
   }
+  // const docId = `${userId}${juzIndex}${surahIndex}${ayahIndex}wrg`
   // const collectionRef = collection(firestoreDb, 'UserAyahProgress')
   // await addDoc(collectionRef, payload)
+  // must not using docId as we need to store all wrong value
   await firestore().collection("UserAyahProgress").add(payload);
   
 }
@@ -30,7 +32,7 @@ export async function saveAyahProgress(userId, juzIndex, surahIndex, ayahIndex, 
   const docId = `${userId}${juzIndex}${surahIndex}${ayahIndex}`
   const existing = await firestore()
     .collection("UserAyahProgress")
-    .doc(docId);
+    .doc(docId).get();
   const data = existing.data()
   let payload = {}
   if(data) {
@@ -47,10 +49,10 @@ export async function saveAyahProgress(userId, juzIndex, surahIndex, ayahIndex, 
       score,
       userId,
       wrong: false,
-      createdAt: Timestamp.now()
+      createdAt: firestore.FieldValue.serverTimestamp()
     }
     // await setDoc(document, payload)
-    await firestore().collection("UserAyahProgress").add(payload);
+    await firestore().collection("UserAyahProgress").doc(docId).set(payload);
   }
 }
 
@@ -74,9 +76,28 @@ export async function saveSurahProgress(userId, email, juzIndex, surahIndex, aya
       surahIndex,
       coverage,
       userId,
-      createdAt: Timestamp.now()
+      createdAt: firestore.FieldValue.serverTimestamp()
     }
     // await setDoc(document, payload)
-    await firestore().collection("UserSurahProgress").add(payload);
+    await firestore().collection("UserSurahProgress").doc(docId).set(payload);
   }
+}
+
+export async function weeklyProgress(userId) {
+  const now = new Date()
+  const aweekBefore = new Date()
+  aweekBefore.setDate(now.getDate()-now.getDay())
+  const progressFetch = await firestore()
+    .collection('UserAyahProgress')
+    .where('userId', '==', userId)
+    .where('createdAt', '>=', aweekBefore)
+    .get()
+  // getDocs(
+  //   query(
+  //     collection(firestoreDb, 'UserAyahProgress'),
+  //     where('userId', '==', userId),
+  //     where('createdAt', '>=', aweekBefore),
+  //   )
+  // )
+  return progressFetch.docs
 }

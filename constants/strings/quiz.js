@@ -1,7 +1,11 @@
 const QUIZ_STRINGS =  {
   ayah_after_question: {
-    en: 'What is the ayah after this?',
+    en: 'What is the ayah AFTER this?',
     id: 'Apa lanjutan dari ayat berikut ini?'
+  },
+  ayah_before_question: {
+    en: 'What is the ayah BEFORE this?',
+    id: 'Apa ayat sebelum ayat berikut ini?'
   },
   construct_ayah: {
     en: 'Sort the words to form the right ayah',

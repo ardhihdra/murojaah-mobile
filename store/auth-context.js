@@ -1,10 +1,12 @@
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Alert } from "react-native";
-import { getUserByEmail, getUserById } from "@api/user";
+import { getUserByEmail, getUserById, updateUser } from "@api/user";
+import User from 'db/models/User';
 
 export const AuthContext = createContext({
   token: null,
@@ -22,7 +24,6 @@ export const AuthContext = createContext({
 export function AuthProvider({children}) {
   const [authToken, setAuthToken] = useState()
   const [user, setUser] = useState({})
-  const [initialization, setInitialization] = useState(true)
 
   async function onAuthStateChangedHandler(user) {
     if (user) {
@@ -30,7 +31,6 @@ export function AuthProvider({children}) {
       // https://firebase.google.com/docs/reference/js/firebase.User
       // const uid = user.uid;
       // TODO : To Follow @react-native-firebase/auth method
-      if (initialization) setInitialization(false)
       // const idToken = await user._auth._nativeModule.getIdToken()
       const idToken = await firebase.auth().currentUser.getIdToken()
       if (idToken) AsyncStorage.setItem('token', idToken)
@@ -38,6 +38,23 @@ export function AuthProvider({children}) {
       const userData = await fetchUserData(userInfo.uid).catch(err => {
         Alert.alert('Error user data', err?.message)
       })
+      if (!userData) {
+        const userInstance = new User({
+          ...userInfo,
+          name: userInfo?.displayName,
+          id: userInfo?.uid,
+          photoURL: userInfo?.photoURL,
+          dirham: 0,
+          health: 0,
+          level: 0,
+          streak: 0,
+          xp: 0,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          country: '',
+          phoneNumber: ''
+        })
+        await userInstance.saveUserToDB()
+      }
       if (userData) Object.assign(userInfo, userData)
       delete userInfo.stsTokenManager
       delete userInfo.accessToken
@@ -116,25 +133,34 @@ export function AuthProvider({children}) {
     if(userId) {
       let userData = await fetchUserData(user.uid)
       if(userData) {
-        userData = Object.assign(user, userData)
-        if(userData) AsyncStorage.setItem('user', JSON.stringify(userData))
-        setUser(userData)
+        let newUserData = Object.assign(user, userData)
+        if(newUserData) AsyncStorage.setItem('user', JSON.stringify(newUserData))
+        setUser(newUserData)
       }
       return userData
     }
   }
 
-  async function updateUserInfoByGoogle(email) {
-    const documents = await getUserByEmail(email)
-    console.log("DOCUMENTS return", documents.docs, email)
-    for (let doc of documents.docs) {
-      const userData = doc.data()
-      console.log("IS EMAIL FOUND", userData)
-      if(userData) {
-        userData = Object.assign(user, userData)
-        AsyncStorage.setItem('user', JSON.stringify(userData))
-        setUser(userData)
+  async function updateUserInfoByGoogle(user) {
+    try {
+      const documents = await getUserByEmail(user?.email)
+      for (let doc of documents.docs) {
+        const userData = doc.data()
+        if (userData) {
+          const newUserData = {
+            emailVerified: true,
+            providerData: [
+              {
+                ...user,
+                providerId: "google.com",
+              }
+            ]
+          }
+          await updateUser(userData.id, newUserData)
+        }
       }
+    } catch (error) {
+      console.error("Failed to update user info", error)
     }
   }
 

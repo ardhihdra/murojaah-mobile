@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
+import firestore from '@react-native-firebase/firestore';
 
 import { useCallback } from 'react';
 import { AuthProvider } from 'store/auth-context';
