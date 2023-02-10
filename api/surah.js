@@ -1,22 +1,27 @@
-import { firestoreDb } from "db/firebase";
-import { collection, getDocs, where, query, orderBy } from "firebase/firestore"; 
+import firestore from '@react-native-firebase/firestore';
 import { Alert } from "react-native";
 const ayahData = require('../assets/data/ayah.json')
 
 export async function fetchSurahProgress(userId) {
   let result = []
   try {
-    let snapshots = [getDocs(collection(firestoreDb, 'SurahInfo'), {})]
+    // let snapshots = [getDocs(collection(firestoreDb, 'SurahInfo'), {})]
+    let snapshots = [firestore().collection('SurahInfo').get()]
     if(!userId) {
       Alert.alert('userId is required')
     } else {
-      snapshots.push(getDocs(
-        query(
-          collection(firestoreDb, 'UserAyahProgress'),
-          where('userId', '==', userId),
-          where('wrong', '!=', true),
-        )
-      ))
+      // snapshots.push(getDocs(
+      //   query(
+      //     collection(firestoreDb, 'UserAyahProgress'),
+      //     where('userId', '==', userId),
+      //     where('wrong', '!=', true),
+      //   )
+      // ))
+      snapshots.push(
+        firestore().collection('UserAyahProgress')
+          .where('userId', '==', userId)
+          .where('wrong', '!=', true).get()
+      )
     }
     const [querySnapshot, progressSnapshot] = await Promise.all(snapshots)
     

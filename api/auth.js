@@ -1,7 +1,5 @@
-// import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { auth, firestoreDb } from 'db/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 /**
  * Save user email and password to Firebase Authorization
@@ -11,11 +9,11 @@ import { doc, setDoc, updateDoc } from 'firebase/firestore';
  * @returns 
  */
 export async function signUp(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password)
+  return auth().createUserWithEmailAndPassword(email, password)
 }
 
 export async function signIn(email, password) {
-  return signInWithEmailAndPassword(auth, email, password)
+  return auth().signInWithEmailAndPassword(email, password)
 }
 
 // export async function signInGoogle() {
@@ -42,12 +40,14 @@ export async function signIn(email, password) {
 
 export async function createUser(params) {
   if(!params.id) throw 'user\' id is required'
-  const surahRef = await setDoc(doc(firestoreDb, "User", params.id), params);
+  // const surahRef = await firestore().setDoc(doc(firestoreDb, "User", params.id), params);
+  const surahRef = await firestore().collection("User").add(params);
   return surahRef
 }
 
 export async function editUserData(userId, params={}) {
   if(!userId) throw 'user\' id is required'
-  const surahRef = await updateDoc(doc(firestoreDb, "User", userId), params);
+  // const surahRef = await updateDoc(doc(firestoreDb, "User", userId), params);
+  const surahRef = await firestore().collection("User").doc(userId).update(params);
   return surahRef
 }

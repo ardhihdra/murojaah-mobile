@@ -1,10 +1,8 @@
+import firestore from '@react-native-firebase/firestore';
 import { numberToIndex } from 'utils/helper';
 import juzData from '../constants/juz.json';
 import surahData from '../constants/surah.json';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { firestoreDb } from 'db/firebase';
 import { createRandomQuestion, createSurahQuestion } from 'utils/quiz';
-import { QUESTION_TYPES } from '@constants/types';
 
 /**
  * get question in 'index' with 'total' questions
@@ -32,12 +30,16 @@ export async function getJuzQuestion(
     const surahIdx = stg.split(':')[1]
     if(!surahKeys[surahIdx]) surahKeys[surahIdx] = true
   })
-  const surahDetail = await getDocs(
-    query(
-      collection(firestoreDb, 'SurahDetail'),
-      where('index', 'in', Object.keys(surahKeys)),
-    )
-  )
+  // const surahDetail = await getDocs(
+  //   query(
+  //     collection(firestoreDb, 'SurahDetail'),
+  //     where('index', 'in', Object.keys(surahKeys)),
+  //   )
+  // )
+  const surahDetail = await firestore().collection("SurahDetail")
+      .where('index', 'in', Object.keys(surahKeys))
+      .get()
+
   let questions = []
   const surahDatas = {}
   surahDetail.docs.map(sdd => {
@@ -80,7 +82,8 @@ export async function getSurahQuestion(
     const surahIdx = stg.split(':')[1]
     if(!surahKeys[surahIdx]) surahKeys[surahIdx] = true
   })
-  const surahDetail = await getDoc(doc(firestoreDb, 'SurahDetail', index))
+  // const surahDetail = await getDoc(doc(firestoreDb, 'SurahDetail', index))
+  const surahDetail = await firestore().collection("SurahDetail").doc(index).get()
   const surahData = surahDetail.data()
   let questions = []
 

@@ -1,13 +1,10 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-import { auth, firestoreDb } from "db/firebase";
 import { Alert } from "react-native";
-
-// GoogleSignin.configure();
+import { getUserByEmail, getUserById } from "@api/user";
 
 export const AuthContext = createContext({
   token: null,
@@ -15,6 +12,7 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   updateUserInfo: () => null,
   fetchUserData: () => null,
+  updateUserInfoByGoogle: () => null,
   // authenticate: (response) => {},
   logout: () => {},
 })
@@ -24,6 +22,36 @@ export const AuthContext = createContext({
 export function AuthProvider({children}) {
   const [authToken, setAuthToken] = useState()
   const [user, setUser] = useState({})
+  const [initialization, setInitialization] = useState(true)
+
+  async function onAuthStateChangedHandler(user) {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      // const uid = user.uid;
+      // TODO : To Follow @react-native-firebase/auth method
+      if (initialization) setInitialization(false)
+      // const idToken = await user._auth._nativeModule.getIdToken()
+      const idToken = await firebase.auth().currentUser.getIdToken()
+      if (idToken) AsyncStorage.setItem('token', idToken)
+      const userInfo = {...user._user}
+      const userData = await fetchUserData(userInfo.uid).catch(err => {
+        Alert.alert('Error user data', err?.message)
+      })
+      if (userData) Object.assign(userInfo, userData)
+      delete userInfo.stsTokenManager
+      delete userInfo.accessToken
+      if (userInfo) AsyncStorage.setItem('user', JSON.stringify(userInfo))
+      setUser(userInfo)
+      setAuthToken(idToken)
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      setAuthToken(null)
+      setUser({})
+    }
+  }
 
   useEffect(() => {
     AsyncStorage.getItem('token').then(token => {
@@ -33,41 +61,45 @@ export function AuthProvider({children}) {
       if(user) setUser(JSON.parse(user))
     })
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // const uid = user.uid;
-        AsyncStorage.setItem('token', user.accessToken)
-        const userInfo = {...user}
-        const userData = await fetchUserData(userInfo.uid).catch(err => {
-          Alert.alert('Error user data', err?.message)
-        })
-        if(userData) Object.assign(userInfo, userData)
-        delete userInfo.stsTokenManager
-        delete userInfo.accessToken
-        AsyncStorage.setItem('user', JSON.stringify(userInfo))
-        setUser(userInfo)
-        setAuthToken(user.accessToken)
-        // ...
-      } else {
-        // User is signed out
-        // ...
-        setAuthToken(null)
-        setUser({})
-      }
-    });
+    const subscriber = auth().onAuthStateChanged(onAuthStateChangedHandler)
+    return subscriber;
+
+    // onAuthStateChanged(auth, async (user) => {
+    //   if (user) {
+    //     // User is signed in, see docs for a list of available properties
+    //     // https://firebase.google.com/docs/reference/js/firebase.User
+    //     // const uid = user.uid;
+    //     console.log("onAuthStateChanged", user)
+    //     AsyncStorage.setItem('token', user.accessToken)
+    //     const userInfo = {...user}
+    //     const userData = await fetchUserData(userInfo.uid).catch(err => {
+    //       Alert.alert('Error user data', err?.message)
+    //     })
+    //     if(userData) Object.assign(userInfo, userData)
+    //     delete userInfo.stsTokenManager
+    //     delete userInfo.accessToken
+    //     AsyncStorage.setItem('user', JSON.stringify(userInfo))
+    //     setUser(userInfo)
+    //     setAuthToken(user.accessToken)
+    //     // ...
+    //   } else {
+    //     // User is signed out
+    //     // ...
+    //     setAuthToken(null)
+    //     setUser({})
+    //   }
+    // });
   }, [])
 
   async function fetchUserData(userId) {
-    const document = doc(firestoreDb, 'User', userId)
-    const userFetch = await getDoc(document)
-    const userData = userFetch.data()
-    return userData
+    // const document = doc(firestoreDb, 'User', userId)
+    // const userFetch = await getDoc(document)
+    // const userData = userFetch.data()
+    return getUserById(userId)
   }
 
   function logout() {
-    signOut(auth)
+    auth().signOut(auth)
       .then(() => {
         // Sign-out successful.
         setAuthToken(null)
@@ -85,9 +117,24 @@ export function AuthProvider({children}) {
       let userData = await fetchUserData(user.uid)
       if(userData) {
         userData = Object.assign(user, userData)
+        if(userData) AsyncStorage.setItem('user', JSON.stringify(userData))
         setUser(userData)
       }
       return userData
+    }
+  }
+
+  async function updateUserInfoByGoogle(email) {
+    const documents = await getUserByEmail(email)
+    console.log("DOCUMENTS return", documents.docs, email)
+    for (let doc of documents.docs) {
+      const userData = doc.data()
+      console.log("IS EMAIL FOUND", userData)
+      if(userData) {
+        userData = Object.assign(user, userData)
+        AsyncStorage.setItem('user', JSON.stringify(userData))
+        setUser(userData)
+      }
     }
   }
 
@@ -97,6 +144,7 @@ export function AuthProvider({children}) {
     isAuthenticated: !!authToken,
     updateUserInfo: updateUserInfo,
     fetchUserData: fetchUserData,
+    updateUserInfoByGoogle: updateUserInfoByGoogle,
     // authenticate: authenticate,
     logout: logout
   }

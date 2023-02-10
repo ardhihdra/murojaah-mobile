@@ -20,15 +20,18 @@
     "ios": {
       "buildNumber": "0.1.0",
       "supportsTablet": true,
-      "backgroundColor": "#d9ffe7"
+      "backgroundColor": "#d9ffe7",
+      "googleServicesFile": "./credentials/GoogleService-Info.plist",
+      "bundleIdentifier": "com.ardhihdra.murojaah"
     },
     "android": {
       "versionCode": 1,
+      "googleServicesFile": "./credentials/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#d9ffe7"
       },
-      "package": "com.ardhihdra.murojaah"
+      "package": "com.murojaah.murojaah_mobile_7"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +40,10 @@
       "eas": {
         "projectId": "bb935f24-499e-48bd-9ad9-51aeb8b53206"
       }
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-google-signin/google-signin",
+    ]
   }
 }

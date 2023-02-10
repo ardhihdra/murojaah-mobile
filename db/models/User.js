@@ -1,6 +1,5 @@
 import { createUser } from "@api/auth"
-import { Timestamp } from "firebase/firestore"
-
+import firestore from "@react-native-firebase/firestore"
 export default class User {
   constructor({
     id, name, email, emailVerified, 
@@ -36,7 +35,7 @@ export default class User {
       photoURL: this.photoURL,
       phoneNumber: this.phoneNumber,
       country: this.country,
-      createdAt: Timestamp.now()
+      createdAt: firestore.FieldValue.serverTimestamp(),
     })
     return creation
   }

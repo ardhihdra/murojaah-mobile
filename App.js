@@ -1,10 +1,10 @@
+import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 
 import { useCallback } from 'react';
-import 'db/firebase';
 import { AuthProvider } from 'store/auth-context';
 import Router from '@components/Router';
 import { mainColor } from '@styles/Main.styles';

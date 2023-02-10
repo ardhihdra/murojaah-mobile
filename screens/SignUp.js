@@ -1,5 +1,5 @@
+import auth from "@react-native-firebase/auth"
 import { ROUTES } from "@constants/routes";
-import { getAuth } from "firebase/auth";
 import { useState } from "react";
 import { Button, StyleSheet, TextInput, View } from "react-native"
 
@@ -12,19 +12,23 @@ export function SignUp({
   })
   const { email, password } = form
   const [error, setError] = useState('')
-  const auth = getAuth();
   
   function handleSubmit() {
     // auth.signInWithEmailAndPassword(email, password)
-    createUserWithEmailAndPassword(auth, email, password)
+    auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         // Login successful, navigate to the home screen
+        console.log("SHOULD GO Home")
         navigation.navigate(ROUTES.Home);
       })
       .catch((error) => {
         if (error.code === 'auth/user-not-found') {
           // Display signup form if the user does not exist
           navigation.navigate(ROUTES.SignUp);
+        } else if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        } else if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
         } else {
           // Display an error message for other types of login errors
           setError({ error });

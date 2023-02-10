@@ -1,22 +1,31 @@
-import { firestoreDb } from "db/firebase";
-import { collection, doc, getDoc, getDocs, collectionGroup, where, query, orderBy } from "firebase/firestore"; 
+import firestore from '@react-native-firebase/firestore';
 import { Alert } from "react-native";
+
 const juzData = require('../assets/data/juz.json')
 const ayahData = require('../assets/data/ayah.json')
 
 export async function fetchJuzProgress(userId, id=null) {
   let result = []
-  let snapshots = [getDocs(collection(firestoreDb, 'JuzInfo'), {})]
+  // let snapshots = [getDocs(collection(firestoreDb, 'JuzInfo'), {})]
+  let snapshots = [
+    firestore().collection("JuzInfo").get()
+  ]
   if(!userId) {
     Alert.alert('userId is required')
   } else {
-    snapshots.push(getDocs(
-      query(
-        collection(firestoreDb, 'UserAyahProgress'),
-        where('userId', '==', userId),
-        where('wrong', '!=', true),
-      )
-    ))
+    // snapshots.push(getDocs(
+    //   query(
+    //     collection(firestoreDb, 'UserAyahProgress'),
+    //     where('userId', '==', userId),
+    //     where('wrong', '!=', true),
+    //   )
+    // ))
+    snapshots.push(
+      firestore().collection("UserAyahProgress")
+        .where('userId', '==', userId)
+        .where('wrong', '!=', true)
+        .get()
+    )
   }
   try {
     const [querySnapshot, progressSnapshot] = await Promise.all(snapshots)
@@ -64,8 +73,10 @@ export async function getJuzInfoDetail(juzInfoSnapshot) {
         const data = qs.data()
         const startPath = data.start._key.path.segments
         const endPath = data.end._key.path.segments
-        let startRef = await getDocs(collection(firestoreDb, startPath.join('/')))
-        let endRef = await getDocs(collection(firestoreDb, endPath.join('/')))
+        // let startRef = await getDocs(collection(firestoreDb, startPath.join('/')))
+        // let endRef = await getDocs(collection(firestoreDb, endPath.join('/')))
+        let startRef = await firestore().collection(startPath.join('/'))
+        let endRef = await firestore().collection(endPath.join('/'))
         data.start = startRef
         data.start = endRef
         result.push(data)

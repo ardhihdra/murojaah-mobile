@@ -1,25 +1,27 @@
-import { firestoreDb } from "db/firebase";
-import {
-  Timestamp, addDoc, collection, doc, endAt, getDoc, getDocs, limit, orderBy, query, setDoc, startAt, where
-} from "firebase/firestore";
+import firestore from '@react-native-firebase/firestore';
 
 export async function fetchFriendInfo(userId) {
-  const collectionRef = collection(firestoreDb, 'Friend')
-
+  // const collectionRef = collection(firestoreDb, 'Friend')
   const fetched = await Promise.all([
-    getDocs(query(collectionRef, where('following', '==', userId))),
-    getDocs(query(collectionRef, where('followed', '==', userId))),
+    firestore().collection("Friend").where('following', '==', userId).get(),
+    firestore().collection("Friend").where('followed', '==', userId).get(),
   ])
+  // const fetched = await Promise.all([
+  //   getDocs(query(collectionRef, where('following', '==', userId))),
+  //   getDocs(query(collectionRef, where('followed', '==', userId))),
+  // ])
   let following = [], followed = [];
   for(let fds of fetched[0].docs) {
     let data = fds.data()
-    const user = await getDoc(doc(firestoreDb, 'User', data.followed))
+    const user = await firestore().collection("User").doc(data.followed).get();
+    // const user = await getDoc(doc(firestoreDb, 'User', data.followed))
     if(user.data()) data = {...data, ...user.data(), uid: user.id}
     following.push(data)
   }
   for(let fds of fetched[1].docs) {
     let data = fds.data()
-    const user = await getDoc(doc(firestoreDb, 'User', data.following))
+    const user = await firestore().collection("User").doc(data.following).get();
+    // const user = await getDoc(doc(firestoreDb, 'User', data.following))
     if(user.data()) data = {...data, ...user.data(), uid: user.id}
     followed.push(data)
   }
@@ -27,11 +29,17 @@ export async function fetchFriendInfo(userId) {
 }
 
 export async function fetchFindUsers(search, userId) {
-  const ref = collection(firestoreDb, "User");
-  const q = query(ref, orderBy('email'), startAt(search), endAt(search+'\uf8ff'), limit(5));
-  const [querySnapshot] = await Promise.all([
-    getDocs(q)
-  ])
+  // const ref = collection(firestoreDb, "User");
+  // const q = query(ref, orderBy('email'), startAt(search), endAt(search+'\uf8ff'), limit(5));
+  // const [querySnapshot] = await Promise.all([
+  //   getDocs(q)
+  // ])
+  const querySnapshot = await firestore()
+    .collection("User")
+    .orderBy('email')
+    .startAt(search).endAt(search+'\uf8ff')
+    .limit(5).get();
+
   let res = []
   querySnapshot.docs.map(qsd => {
     const data = qsd.data()
@@ -42,16 +50,18 @@ export async function fetchFindUsers(search, userId) {
 }
 
 export async function checkIsFriend(userId, friendId) {
-  const collectionRef = collection(firestoreDb, 'Friend')
+  // const collectionRef = collection(firestoreDb, 'Friend')
   const fetched = await Promise.all([
-    getDocs(query(
-      collectionRef,
-      where('following', '==', userId), where('followed', '==', friendId), limit(1)
-    )),
-    getDocs(query(
-      collectionRef,
-      where('followed', '==', userId), where('following', '==', friendId), limit(1)
-    )),
+    firestore().collection("Friend").where('followed', '==', friendId).limit(1).get(),
+    firestore().collection("Friend").where('following', '==', friendId).limit(1).get(),
+    // getDocs(query(
+    //   collectionRef,
+    //   where('following', '==', userId), where('followed', '==', friendId), limit(1)
+    // )),
+    // getDocs(query(
+    //   collectionRef,
+    //   where('followed', '==', userId), where('following', '==', friendId), limit(1)
+    // )),
   ])
   const data1 = fetched[0].docs
   const data2 = fetched[1].docs
@@ -59,12 +69,14 @@ export async function checkIsFriend(userId, friendId) {
 }
 
 export async function addFriend(userId, friendId) {
-  const collectionRef = collection(firestoreDb, 'Friend')
+  // const collectionRef = collection(firestoreDb, 'Friend')
 
-  const payload = {
-    following: userId,
-    followed: friendId,
-    createdAt: Timestamp.now()
-  }
-  await addDoc(collectionRef, payload)
+  // const payload = {
+  //   following: userId,
+  //   followed: friendId,
+  //   createdAt: Timestamp.now()
+  // }
+  // await addDoc(collectionRef, payload)
+  await firestore().collection("Friend").add(payload);
+
 }
