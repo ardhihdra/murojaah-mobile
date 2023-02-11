@@ -9,7 +9,7 @@ export const MAKHRAJS = [
 		"transliteration": "' / ā",
 		"sound": {
 				en: "long unrounded low central back vowel",
-				id: "vokal belakang rendah tengah yang panjang dan tidak dibulatkan",
+				id: "Huruf yang keluar dari rongga mulut huruf-huruf Mad",
 		},
 		"pronunciation": {
 				en: "'a' as in 'father'",
@@ -25,11 +25,11 @@ export const MAKHRAJS = [
 		"transliteration": "b",
 		"sound": {
 				en: "voiced bilabial stop",
-				id: "menyuarakan bilabial berhenti"
+				id: "menempelkan dua bibir"
 		},
 		"pronunciation": {
 				en: "'b' as in 'bed'",
-				id: "'b' seperti pada'bibi'",
+				id: "'b' seperti pada 'bibi'",
 		}
 	},
 	{
@@ -41,11 +41,11 @@ export const MAKHRAJS = [
 		"transliteration": "t",
 		"sound": {
 				en: "voiced aspirated stop",
-				id: "menyuarakan aspirasi berhenti"
+				id: "ujung lidah yang bertemu dengan gigi bagian atas"
 		},
 		"pronunciation": {
 				en: "'t' as in 'tent'",
-				id: "'t' as in 'tent'",
+				id: "'t' as in 'tinta'",
 		}
 	},
 	{
@@ -57,11 +57,11 @@ export const MAKHRAJS = [
 			"transliteration": "th",
 			"sound": {
 				en: "voiceless interdental fricative",
-				id: "voiceless interdental fricative",
+				id: "ujung lidah keluar sedikit, bertemu dengan ujung gigi depan bagian atas",
 		},
 			"pronunciation": {
 				en: "'th' as in 'think'",
-				id: "'th' as in 'think'",
+				id: "'th' dengan lidah seperti digigit gigi seri",
 		}
 	},
 	{
@@ -73,11 +73,11 @@ export const MAKHRAJS = [
 			"transliteration": "j",
 			"sound": {
 				en: "voiced palatal affricate",
-				id: "voiced palatal affricate",
+				id: " tengah-tengah lidah bertemu dengan menepati langit-langit bagian atas",
 		},
 			"pronunciation": {
 				en: "'j' as in 'jam'",
-				id: "'j' as in 'jam'",
+				id: "'j' seperti pada 'jam'",
 		}
 	},
 	{
@@ -89,11 +89,11 @@ export const MAKHRAJS = [
 			"transliteration": "ḥ",
 			"sound": {
 				en: "voiceless pharyngeal constricted fricative",
-				id: "voiceless pharyngeal constricted fricative",
+				id: "Huruf yang keluar dari tenggorokan tengah",
 		},
 			"pronunciation": {
 				en: "only in Arabic; a constricted English 'h'",
-				id: "only in Arabic; a constricted English 'h'",
+				id: "mengucapkan 'h' namun dengan tenggorokan daripada dada",
 		}
 	},
 	{
@@ -105,11 +105,11 @@ export const MAKHRAJS = [
 			"transliteration": "kh",
 			"sound": {
 				en: "voiceless velar fricative",
-				id: "voiceless velar fricative",
+				id: "Huruf yang keluar dari tenggorokan atas",
 		},
 			"pronunciation": {
 				en: "'ch' as in German 'Bach'",
-				id: "'ch' as in German 'Bach'",
+				id: "'ch' seperti bahasa Jerman 'Bach'",
 		}
 	},
 	{
@@ -121,11 +121,11 @@ export const MAKHRAJS = [
 			"transliteration": "d",
 			"sound": {
 				en: "voiced dental stop",
-				id: "voiced dental stop",
+				id: "ujung lidah yang bertemu dengan gigi bagian atas",
 		},
 			"pronunciation": {
 				en: "'d' as in 'deer' (approx.)",
-				id: "'d' as in 'deer' (approx.)",
+				id: "'d' seperti pada 'dua' (approx.)",
 		}
 	},
 	{
@@ -137,11 +137,11 @@ export const MAKHRAJS = [
 			"transliteration": "dh",
 			"sound": {
 				en: "voiced interdental fricative",
-				id: "voiced interdental fricative",
+				id: "ujung lidah keluar sedikit, bertemu dengan ujung gigi depan bagian atas",
 		},
 			"pronunciation": {
 				en: "'th' as in 'there'",
-				id: "'th' as in 'there'",
+				id: "'dz' seperti pada 'dzikir'",
 		}
 	},
 	{
@@ -153,11 +153,11 @@ export const MAKHRAJS = [
 			"transliteration": "r",
 			"sound": {
 				en: "voiced dental trill",
-				id: "voiced dental trill"
+				id: "ujung lidah, sama seperti dengan memasukkan punggung lidah"
 		},
 			"pronunciation": {
 				en: "'r' as in 'run' (approx.)",
-				id: "'r' as in 'run' (approx.)",
+				id: "'r' seperti pada 'rubah' (approx.)",
 		}
 	},
 	{
@@ -169,11 +169,11 @@ export const MAKHRAJS = [
 			"transliteration": "z",
 			"sound": {
 				en: "voiced dental sibilant",
-				id: "voiced dental sibilant",
+				id: "ujung lidah yang hampir bertemu dengan gigi depan bagian bawah",
 		},
 			"pronunciation": {
 				en: "'z' as in 'zoo' (approx.)",
-				id: "'z' as in 'zoo' (approx.)",
+				id: "'z' seperti pada 'zebra' (approx.)",
 		}
 	},
 	{
@@ -185,11 +185,11 @@ export const MAKHRAJS = [
 			"transliteration": "s",
 			"sound": {
 				en: "voiceless dental sibilant",
-				id: "voiceless dental sibilant",
+				id: "ujung lidah yang hampir bertemu dengan gigi depan bagian bawah",
 		},
 			"pronunciation": {
 				en: "'s' as in 'sit'",
-				id: "'s' as in 'sit'",
+				id: "'s' seperti pada 'sulit'",
 		}
 	},
 	{
@@ -201,11 +201,11 @@ export const MAKHRAJS = [
 			"transliteration": "sh",
 			"sound": {
 				en: "voiceless palatal sibilant",
-				id: "voiceless palatal sibilant",
+				id: "Tengah-tengah lidah bertemu dengan menepati langit-langit bagian atas",
 		},
 			"pronunciation": {
 				en: "'sh' as in 'shut'",
-				id: "'sh' as in 'shut'",
+				id: "'sh' seperti pada 'shut'",
 		}
 	},
 	{
@@ -217,11 +217,11 @@ export const MAKHRAJS = [
 		"transliteration": "ṣ",
 		"sound": {
 			en: "voiceless post-dental sibilant emphatic",
-			id: "voiceless post-dental sibilant emphatic",
+			id: "ujung lidah yang hampir bertemu dengan gigi depan bagian bawah",
 		},
 			"pronunciation": {
 				en: "the counterpart of Sῑn; all the 'emphatics' are pronounced with the back of the tongue slightly raised",
-				id: "the counterpart of Sῑn; all the 'emphatics' are pronounced with the back of the tongue slightly raised",
+				id: "seperti sin namun dengan bawah lidah diangkat",
 		}
 	},
 	{
@@ -233,11 +233,11 @@ export const MAKHRAJS = [
 		"transliteration": "ḍ",
 		"sound": {
 			en: "voiced post-dental emphatic stop",
-			id: "voiced post-dental emphatic stop",
+			id: "keluar dari dua sisi lidah atau salah satunya bertemu dengan gigi geraham",
 		},
 		"pronunciation": {
 			en: "the counterpart of Dāl",
-			id: "the counterpart of Dāl",
+			id: "'d' menggunakan pinggir lidah",
 		}
 	},
 	{
@@ -249,11 +249,11 @@ export const MAKHRAJS = [
 		"transliteration": "ṭ",
 		"sound": {
 			en: "voiceless post-dental emphatic stop",
-			id: "voiceless post-dental emphatic stop",
+			id: "ujung lidah yang bertemu dengan gigi bagian atas",
 		},
 		"pronunciation": {
 			en: "the counterpart of Tā'",
-			id: "the counterpart of Tā'",
+			id: "kebalikan dari Tā'",
 		}
 	},
 	{
@@ -265,11 +265,11 @@ export const MAKHRAJS = [
 		"transliteration": "ẓ",
 		"sound": {
 			en: "voiced post-interdental emphatic fricative",
-			id: "voiced post-interdental emphatic fricative",
+			id: "ujung lidah keluar sedikit, bertemu dengan ujung gigi depan bagian atas",
 		},
 		"pronunciation": {
 			en: "the counterpart of Dhāl",
-			id: "the counterpart of Dhāl",
+			id: "kebalikan dari Dhāl",
 		}
 	},
 	{
@@ -281,11 +281,11 @@ export const MAKHRAJS = [
 		"transliteration": "c",
 		"sound": {
 			en: "voiced pharyngeal fricative",
-			id: "voiced pharyngeal fricative",
+			id: "Huruf yang keluar dari tenggorokan tengah",
 		},
 		"pronunciation": {
 			en: "purely Arabic -- a constriction of the throat and an expulsion of the breath with the vocal cords vibrating",
-			id: "purely Arabic -- a constriction of the throat and an expulsion of the breath with the vocal cords vibrating",
+			id: "murni bahasa Arab -- penyempitan tenggorokan dan pengeluaran nafas dengan pita suara bergetar",
 		}
 	},
 	{
@@ -297,11 +297,11 @@ export const MAKHRAJS = [
 		"transliteration": "gh",
 		"sound": {
 			en: "voiced uvular fricative",
-			id: "voiced uvular fricative",
+			id: "Huruf yang keluar dari tenggorokan tengah atas",
 		},
 		"pronunciation": {
 			en: "close to a French 'r' as in 'Paris' -- like a gentle gargling",
-			id: "close to a French 'r' as in 'Paris' -- like a gentle gargling",
+			id: "menyebutkan 'g' namun menggunakan tenggorokan atas daripada lidah belakang",
 		}
 	},
 	{
@@ -313,11 +313,11 @@ export const MAKHRAJS = [
 		"transliteration": "f",
 		"sound": {
 			en: "labio-dental voiceless fricative",
-			id: "labio-dental voiceless fricative",
+			id: "keluar dari bibir bagian dalam bertemu dengan ujung gigi atas",
 		},
 		"pronunciation": {
 			en: "'f' as in 'free'",
-			id: "'f' as in 'free'",
+			id: "'f' seperti pada 'film'",
 		}
 	},
 	{
@@ -329,11 +329,11 @@ export const MAKHRAJS = [
 		"transliteration": "q",
 		"sound": {
 			en: "voiceless unaspirated uvular stop",
-			id: "voiceless unaspirated uvular stop",
+			id: "pangkal lidah (dekat kerongkongan) yang dihimpitkan ke langit-langit mulut bagian belakang",
 		},
 		"pronunciation": {
 			en: "'k' in the back of the throat; compare 'cough' with 'calf'",
-			id: "'k' in the back of the throat; compare 'cough' with 'calf'",
+			id: "'k' namun menggunakan lidah paling belakang dan ditempelkan",
 		}
 	},
 	{
@@ -345,11 +345,11 @@ export const MAKHRAJS = [
 		"transliteration": "k",
 		"sound": {
 			en: "voiceless aspirated palatal or velar stop",
-			id: "voiceless aspirated palatal or velar stop",
+			id: "pangkal lidah (dekat kerongkongan)",
 		},
 		"pronunciation": {
 			en: "'k' as in 'king'",
-			id: "'k' as in 'king'",
+			id: "'k' seperti pada 'kuda'",
 		}
 	},
 	{
@@ -361,11 +361,11 @@ export const MAKHRAJS = [
 			"transliteration": "l",
 			"sound": {
 				en: "voiced dental lateral",
-				id: "voiced dental lateral",
+				id: "ujung lidah dan bertemu dengan ujung langit-langit",
 			},
 			"pronunciation": {
 				en: "'l' as in 'lift'",
-				id: "'l' as in 'lift'",
+				id: "'l' as in 'luar'",
 			}
 	},
 	{
@@ -377,11 +377,11 @@ export const MAKHRAJS = [
 		"transliteration": "m",
 		"sound": {
 			en: "voiced bilabial nasal",
-			id: "voiced bilabial nasal",
+			id: "menempelkan dua bibir,",
 		},
 		"pronunciation": {
 			en: "'m' as in 'moon'",
-			id: "'m' as in 'moon'",
+			id: "'m' seperti pada 'mawar'",
 		}
 	},
 	{
@@ -393,11 +393,11 @@ export const MAKHRAJS = [
 		"transliteration": "n",
 		"sound": {
 			en: "voiced dental nasal",
-			id: "voiced dental nasal",
+			id: "ujung lidah di bawah makhraj huruf 'lam",
 		},
 		"pronunciation": {
 			en: "'n' as in 'net'",
-			id: "'n' as in 'net'",
+			id: "'n' as in 'nenek'",
 		}
 	},
 	{
@@ -409,11 +409,11 @@ export const MAKHRAJS = [
 		"transliteration": "h",
 		"sound": {
 			en: "voiceless glottal fricative",
-			id: "voiceless glottal fricative",
+			id: "Huruf yang keluar dari tenggorokan paling bawah",
 		},
 		"pronunciation": {
 			en: "'h' as in 'house'",
-			id: "'h' as in 'house'",
+			id: "'h' seperti pada 'hobi'",
 		}
 	},
 	{
@@ -425,11 +425,11 @@ export const MAKHRAJS = [
 		"transliteration": "w",
 		"sound": {
 			en: "voiced bilabial glide",
-			id: "voiced bilabial glide",
+			id: "Huruf yang keluar dari rongga mulut huruf-huruf Mad",
 		},
 		"pronunciation": {
 			en: "'w' as in 'wonder'",
-			id: "'w' as in 'wonder'",
+			id: "'w' seperti pada 'wakil' dan memonyongkan bibir",
 		}
 	},
 	{
@@ -441,11 +441,11 @@ export const MAKHRAJS = [
 		"transliteration": "y",
 		"sound": {
 			en: "voiced palatal glide",
-			id: "voiced palatal glide",
+			id: "Huruf yang keluar dari rongga mulut huruf-huruf Mad",
 		},
 		"pronunciation": {
 			en: "'y' as in 'yellow'",
-			id: "'y' as in 'yellow'",
+			id: "'y' seperti pada 'yakin'",
 		}
 	},
 	{
@@ -457,11 +457,11 @@ export const MAKHRAJS = [
 		"transliteration": "'",
 		"sound": {
 			en: "voiceless glottal stop",
-			id: "voiceless glottal stop",
+			id: "Huruf yang keluar dari tenggorokan paling bawah",
 		},
 		"pronunciation": {
 			en: "not a phoneme in English but found in some exclamations -- e.g. 'oh-oh'",
-			id: "not a phoneme in English but found in some exclamations -- e.g. 'oh-oh'",
+			id: "sama seperti alif -- e.g. 'oh-oh'",
 		}
 	}
 ]
