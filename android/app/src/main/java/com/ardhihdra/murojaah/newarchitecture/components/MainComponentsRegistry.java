@@ -1,4 +1,4 @@
-package com.murojaah.murojaah_mobile_7.newarchitecture.components;
+package com.ardhihdra.murojaah.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

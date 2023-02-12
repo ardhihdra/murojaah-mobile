@@ -12,6 +12,7 @@ import QUIZ_STRINGS from "@constants/strings/quiz";
 import { SettingsContext } from "store/settings-context";
 import STRINGS from "@constants/strings/strings";
 import { useIsFocused } from "@react-navigation/native";
+import { QUESTION_TYPES } from "@constants/types";
 
 export default function QuizSummary({
   navigation,
@@ -40,7 +41,10 @@ export default function QuizSummary({
       updateXP(user.uid, xp)
     });
     (wrong || []).map(wr => {
-      saveWrongProgress(user.uid, wr.id, wr.type, wr.answered, wr.options).catch(err => {
+      const options = wr.type === QUESTION_TYPES.CONSTRUCT_AYAH ?
+        [...wr.quranQuestion, ...wr.words] :
+        wr.options
+      saveWrongProgress(user.uid, wr.id, wr.type, wr.answered, options).catch(err => {
         Alert.alert('Error wrong progress', err?.message)
       })
     });

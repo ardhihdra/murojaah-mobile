@@ -2,7 +2,7 @@
   "expo": {
     "name": "Murojaah",
     "slug": "murojaah",
-    "version": "0.2.1",
+    "version": "0.3.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,13 +25,13 @@
       "bundleIdentifier": "com.ardhihdra.murojaah"
     },
     "android": {
-      "versionCode": 4,
+      "versionCode": 6,
       "googleServicesFile": "./credentials/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#d9ffe7"
       },
-      "package": "com.murojaah.murojaah_mobile_7"
+      "package": "com.ardhihdra.murojaah"
     },
     "web": {
       "favicon": "./assets/favicon.png"

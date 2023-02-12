@@ -6,7 +6,15 @@
     "start-nocache": "expo start -c",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "fingerprint": "cd android && keytool -keystore app/debug.keystore -list -v",
+    "prebuild-android": "expo prebuild --platform android",
+    "build-local-native-android": "cd android && ./gradlew assembleRelease",
+    "build-local-preview-android": "eas build -p android --profile preview --local",
+    "build-local-production-android": "eas build -p android --profile production --local",
+    "build-eas-preview-android": "eas build -p android --profile preview",
+    "build-eas-production-android": "eas build -p android --profile production",
+    "inspect--build-preview-android": "eas build:inspect --platform android --stage archive --output ./web-build/eas-inspects/android --profile preview"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",

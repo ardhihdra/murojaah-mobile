@@ -106,7 +106,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       } else {
         // some other error happened
         console.error(error)
-        Alert.alert(`${error.code}: Failed to login with Google`)
+        Alert.alert(`${error.code}: ${error}. Failed to login with Google`)
       }
     }
   }

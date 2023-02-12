@@ -1,4 +1,4 @@
-package com.murojaah.murojaah_mobile_7.newarchitecture.modules;
+package com.ardhihdra.murojaah.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

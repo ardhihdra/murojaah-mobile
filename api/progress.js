@@ -14,8 +14,8 @@ export async function saveWrongProgress(userId, index, type, answered, options) 
     wrong: true,
     type: type,
     answered: answered,
-    options: options,
-    createdAt: firestore.FieldValue.serverTimestamp(),
+    options: options || [],
+    createdAt: new Date(),
     // createdAt: Timestamp.now()
   }
   // const docId = `${userId}${juzIndex}${surahIndex}${ayahIndex}wrg`
@@ -49,7 +49,7 @@ export async function saveAyahProgress(userId, juzIndex, surahIndex, ayahIndex, 
       score,
       userId,
       wrong: false,
-      createdAt: firestore.FieldValue.serverTimestamp()
+      createdAt: new Date()
     }
     // await setDoc(document, payload)
     await firestore().collection("UserAyahProgress").doc(docId).set(payload);
@@ -76,7 +76,7 @@ export async function saveSurahProgress(userId, email, juzIndex, surahIndex, aya
       surahIndex,
       coverage,
       userId,
-      createdAt: firestore.FieldValue.serverTimestamp()
+      createdAt: new Date()
     }
     // await setDoc(document, payload)
     await firestore().collection("UserSurahProgress").doc(docId).set(payload);
@@ -84,9 +84,9 @@ export async function saveSurahProgress(userId, email, juzIndex, surahIndex, aya
 }
 
 export async function weeklyProgress(userId) {
-  const now = new Date()
-  const aweekBefore = new Date()
-  aweekBefore.setDate(now.getDate()-now.getDay())
+  const now = new Date() - (1000 * 60 * 60 * 24 * 7)
+  const aweekBefore = new Date(Date.now() - (1000 * 60 * 60 * 24 * 7))
+  // aweekBefore.setDate(now.getDate()-now.getDay())
   const progressFetch = await firestore()
     .collection('UserAyahProgress')
     .where('userId', '==', userId)

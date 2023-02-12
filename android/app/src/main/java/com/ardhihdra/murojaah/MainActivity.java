@@ -1,4 +1,4 @@
-package com.murojaah.murojaah_mobile_7;
+package com.ardhihdra.murojaah;
 
 import android.os.Build;
 import android.os.Bundle;

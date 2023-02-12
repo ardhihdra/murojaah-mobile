@@ -20,23 +20,23 @@ export function createSurahQuestion(type, juzIndex, surahDetailInfo, ayahIndex) 
 
 function createOptionFrom(totalVerses, ayahIndexNumber, verse, answer) {
   const maxOptions = Math.min(totalVerses-2,4)
-  let included = []
+  let included = {}
   let options = []
   let preventer = 0
   while(Object.keys(options).length < maxOptions-1) {
     preventer++;
     const ran = Math.floor(Math.random()*(totalVerses))
     if(ran !== ayahIndexNumber && ran !== ayahIndexNumber-1) {
-      if(verse[`verse_${ran}`] && !included.includes(ran)) {
+      if(verse[`verse_${ran}`] && !included[ran]) {
         options.push(verse[`verse_${ran}`])
-        included.push(ran)
+        included[ran] = true
       }
     }
     if(preventer > 100) break
   }
-  const ran = Math.floor(Math.random()*maxOptions)
-  options.splice(ran, 0, answer);
-  return [options,ran]
+  const answerPosition = Math.floor(Math.random()*maxOptions)
+  options.splice(answerPosition, 0, answer);
+  return [options,answerPosition]
 }
 
 function createAyahBeforeQuestion(juzIndex, surahDetailInfo, ayahIndex) {

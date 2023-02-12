@@ -136,7 +136,8 @@ function surahIndexGenerator(surahIndex, totalResult) {
     const juz = getJuzBySurahAyah(surahIndex,rand)
     const key = `${juz}:${numberToIndex(surahIndex,'surah')}:${rand}`
     // might want to use object instead of array
-    if(!result[key]) result[key] = true
+    // if(result[key]) totalResult++
+    result[key] = true
   }
   return Object.keys(result)
 }

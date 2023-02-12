@@ -14,4 +14,4 @@ web-build/
 .DS_Store
 .env
 .env.*
-credentials
+# credentials

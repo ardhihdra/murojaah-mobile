@@ -1,4 +1,4 @@
-package com.murojaah.murojaah_mobile_7.newarchitecture;
+package com.ardhihdra.murojaah.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.murojaah.murojaah_mobile_7.BuildConfig;
-import com.murojaah.murojaah_mobile_7.newarchitecture.components.MainComponentsRegistry;
-import com.murojaah.murojaah_mobile_7.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.ardhihdra.murojaah.BuildConfig;
+import com.ardhihdra.murojaah.newarchitecture.components.MainComponentsRegistry;
+import com.ardhihdra.murojaah.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

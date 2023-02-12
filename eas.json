@@ -31,12 +31,13 @@
         "DB_CLOUD_PASSWORD": "2f0fe437968d5c18f4f93f392f4b0221a12ab81af443e3dfac0382c153006b36",
         "DB_CLOUD_NAME": "de44g8de641ov8",
         "DB_CLOUD_HOSTNAME": "ec2-34-237-166-54.compute-1.amazonaws.com",
-        "firebase_apiKey": "AIzaSyC1akcPRGOqDKHuYGnqO9y598-2r1Kc25U",
+        "firebase_clientId": "282760367985-m4p9n93938mcki3pk8i7i3s3bng4rgd0.apps.googleusercontent.com",
+        "firebase_apiKey": "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",
         "firebase_authDomain": "murojaah-159bb.firebaseapp.com",
         "firebase_projectId": "murojaah-159bb",
         "firebase_storageBucket": "murojaah-159bb.appspot.com",
         "firebase_messagingSenderId": "282760367985",
-        "firebase_appId": "1:282760367985:web:426944e4c853795783f0d0",
+        "firebase_appId": "1:282760367985:android:17e5cda101706a6f83f0d0",
         "firebase_measurementId": "G-3WVF1BN6DM"
       }
     }

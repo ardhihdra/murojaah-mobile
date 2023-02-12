@@ -74,7 +74,7 @@ export async function addFriend(userId, friendId) {
   const payload = {
     following: userId,
     followed: friendId,
-    createdAt: Timestamp.now()
+    createdAt: new Date()
   }
   // await addDoc(collectionRef, payload)
   await firestore().collection("Friend").add(payload);
