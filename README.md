@@ -159,6 +159,8 @@ To run tests, run the following command:
 
 ### Deployment
 
+If you want to build using EAS don't forget to remove credentials in .gitignore file.
+
 How to deploy 'testing application' to TestFlight for iOS :
 
 - Make sure .env values are correct. (e.g. CONFIG_APP_NAME=; CONFIG_APP_ASSOCIATED_DOMAIN= ;CONFIG_API_URL= ; CONFIG_FIRESTORE_COLLECTION= )
